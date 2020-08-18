@@ -1,5 +1,5 @@
 import argparse
-from feature import FeatureSet, StartingIndex
+from feature import FeatureSet
 import numpy as np
 from scipy.optimize import fmin_l_bfgs_b
 import time
@@ -33,6 +33,8 @@ def readTrainFile(filename):
     if len(word) > 0:
         data.append((word, tag))
     return data
+
+
 #Function used to read test file
 def readTestFile(filename):
     data = list()
@@ -50,6 +52,7 @@ def readTestFile(filename):
 
     return data
 
+
 class CRF():
     def __init__(self):
         self.training_data = None
@@ -59,23 +62,26 @@ class CRF():
         self.labelCounts = None
         self.params = None
 
-
     def getFeature(self):
         return [[self.feature_set.get_feature_list(word, t) for t in range(len(word))]
                 for word, _ in self.training_data]
 
     def estimation(self):
-
         training_feature_data = self.getFeature()
         print('Start L-BFGS-B')
         # Minimize a function func using the L-BFGS-B algorithm.
         # magic
-        self.params, log_likelihood, information = fmin_l_bfgs_b(func=_log_likelihood, fprime=_gradient,x0=np.zeros(len(self.feature_set)),args=(self.training_data, self.feature_set, training_feature_data,
+        self.params, log_likelihood, information = fmin_l_bfgs_b(
+                                    func=_log_likelihood,
+                                    fprime=_gradient,x0=np.zeros(len(self.feature_set)),
+                                    args=(self.training_data,
+                                    self.feature_set,
+                                    training_feature_data,
                                     self.feature_set.get_empirical_counts(),
-                                    self.tagSet, VARIANCE),
-                              callback=_callback)
+                                    self.tagSet,
+                                    VARIANCE),
+                                    callback=_callback)
         print('Finish!')
-
 
     #Main function to train model
     def train(self, inputFilename, model_filename):
@@ -182,6 +188,7 @@ class CRF():
 
         print('CRF model loaded')
 
+
 #Functions that are used in fmin_l_bfgs_b
 def _callback(params):
     global ITERATION_NUM
@@ -191,8 +198,8 @@ def _callback(params):
     TOTAL_SUB_ITERATIONS += SUB_ITERATION_NUM
     SUB_ITERATION_NUM = 0
 
-def generate_potential_table(params, labelCounts, feature_set, word, inference=True):
 
+def generate_potential_table(params, labelCounts, feature_set, word, inference=True):
     potentialTable = list()
     for t in range(len(word)):
         table = np.zeros((labelCounts, labelCounts))
@@ -218,6 +225,7 @@ def generate_potential_table(params, labelCounts, feature_set, word, inference=T
         potentialTable.append(table)
 
     return potentialTable
+
 
 def forward_backward(labelCounts, layer, potential_table):
     #initialization
@@ -261,6 +269,7 @@ def forward_backward(labelCounts, layer, potential_table):
 
     return alpha, beta, Z,scaling_dic
 
+
 def _calc_path_score(potential_table, scaling_dic, tag, tagSet):
     score = 1.0
     lastY = StartingIndex
@@ -274,7 +283,6 @@ def _calc_path_score(potential_table, scaling_dic, tag, tagSet):
 
 
 def _log_likelihood(params,training_data, feature_set, training_feature_data, empirical_counts, tagSet, VARIANCE):
-
     expected_counts = np.zeros(len(feature_set))
     total_logZ = 0
     for X_features in training_feature_data:
@@ -309,17 +317,19 @@ def _log_likelihood(params,training_data, feature_set, training_feature_data, em
     global GRADIENT
     GRADIENT = gradients
 
-    print( likelihood * -1)
+    # print( likelihood * -1)
     return likelihood * -1
+
 
 def _gradient(params, *args):
     return GRADIENT * -1
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-d', type=str,dest="datafile", help="data file for training input")
-    parser.add_argument('-m', type=str,dest="modelfile", help="the model file name. ")
-    parser.add_argument('-s', type=str,dest="function", help="function selected: test or train")
+    parser.add_argument('-d', type=str,  default="data/partial/train", dest="datafile", help="data file for training input")
+    parser.add_argument('-m', type=str, dest="modelfile", help="the model file name. ")
+    parser.add_argument('-s', type=str, dest="function", help="function selected: test or train")
 
     args = parser.parse_args()
     if args.function == 'test':
