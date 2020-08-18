@@ -8,7 +8,7 @@ STARTING_LABEL_INDEX = 0
 
 def default_feature_func(_, word, t):
     #Default feature list for project data format
-    length = len(word)
+    length = len(word) #number of words in a sentence
 
     features = list()
     features.append('U[0]:%s' % word[t][0])
@@ -22,7 +22,6 @@ def default_feature_func(_, word, t):
         features.append('B[-1]:%s %s' % (word[t-1][0], word[t][0]))
         if t > 1:
             features.append('U[-2]:%s' % (word[t-2][0]))
-
 
     return features
 
@@ -43,7 +42,7 @@ class FeatureSet():
             self.feature_func = feature_func
 
     def scan(self, data):
-        # data= (word,tag)
+        # data = (word,tag)
         # Constructs a feature set, and counts empirical counts.
         for word, tag in data:
             lastY = STARTING_LABEL_INDEX
@@ -69,7 +68,6 @@ class FeatureSet():
         return self.num_features
 
     def _add(self, lastY, y, word, t):
-
         for feature_string in self.feature_func(word, t):
             if feature_string in self.feature_dic.keys():
                 if (lastY, y) in self.feature_dic[feature_string].keys():
@@ -100,7 +98,6 @@ class FeatureSet():
                 self.num_features += 1
 
     def get_feature_vector(self, lastY, y, word, t):
-
         feature_ids = list()
         for feature_string in self.feature_func(word, t):
             try:
@@ -110,11 +107,9 @@ class FeatureSet():
         return feature_ids
 
     def get_labels(self):
-
         return self.tagSet, self.tagArray
 
     def calc_inner_products(self, params, word, t):
-
         inner_products = Counter()
         for feature_string in self.feature_func(word, t):
             try:
