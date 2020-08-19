@@ -12,7 +12,7 @@ class Feature():
     def __init__(self, path_train):
         self.path_train = path_train
         self.tags, self.words, self.label_words = self.data_processing()
-        self.emission_parameter= self.calculate_emiss_parameter()
+        self.emission_parameter = self.calculate_emiss_parameter()
         self.transition_parameter = self.calculate_trans_parameter()
         self.feature_dict = self.calculate_feature()
 
@@ -116,7 +116,7 @@ class Feature():
         return tags, words, label_words
 
     def line_cut(self, segmented_line):
-        segmented_line = segmented_line.rsplit(' ', 1)
+        segmented_line = segmented_line.split(' ')
         word = segmented_line[0]
         tag = segmented_line[1]
         return word, tag
@@ -133,3 +133,4 @@ if __name__ == '__main__':
     feature_dict = feature.feature_dict
     n_items = take(5, feature_dict.items())
     pprint(n_items)
+    print("Number of features: ", len(feature_dict.items()))
