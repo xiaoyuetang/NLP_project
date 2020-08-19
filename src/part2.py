@@ -14,6 +14,7 @@ class CRF():
     def __init__(self, path_train):
         self.feature = Feature(path_train)
         self.feature_dict = self.feature.feature_dict
+        self.label_words, self.transition_tag = self.feature.label_words, self.feature.transition_tag
         self.emission_parameter = self.feature.emission_parameter
         self.transition_parameter = self.feature.transition_parameter
         self.score_dict = self.calculate_score()
@@ -27,10 +28,14 @@ class CRF():
         '''
         score_dict = dict()
         for feature, weight in self.feature_dict.items():
-            if feature not in score_dict:
-                score_dict[feature] = weight
+            if "emission" in feature:
+                pair = feature.split("+")
+                tag, word = pair[0].replace("emission:",""), pair[1]
+                score_dict[feature] = weight*self.label_words[tag][word]
             else:
-                score_dict[feature] += weight
+                pair = feature.split("+")
+                word, word2 = pair[0].replace("transition:",""), pair[1]
+                score_dict[feature] = weight*self.transition_tag[word][word2]
 
         return score_dict
 
@@ -73,7 +78,6 @@ class CRF():
             if label not in self.transition_parameter['START']: continue
             emission = self.get_estimate(sequence, label)
 
-
             pi[0][label] = [self.transition_parameter['START'][label] * emission]
 
         for k in tqdm.tqdm(range(1, len(sequence))):
@@ -93,7 +97,7 @@ class CRF():
                         emission = 0.0
                 else:
                     emission = self.emission_parameter[label]['#UNK#']
-                pi[k][label][0] *= emission
+                pi[k][label][0] += emission
 
         # Finally
         slist=[]

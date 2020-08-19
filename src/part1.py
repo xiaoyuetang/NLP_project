@@ -28,7 +28,7 @@ class Feature():
             for word in list(self.label_words[tag]):
                 if word not in self.words:
                     self.label_words[tag]['#UNK#'] += self.label_words[tag].pop(word)
-                elif self.words[word] < 3:
+                elif self.words[word] < 1:
                     self.label_words[tag]['#UNK#'] += self.label_words[tag].pop(word)
                     del self.words[word]
                 else:
@@ -67,8 +67,9 @@ class Feature():
         for tag in transition_tag:
             transition_probability[tag] = {}
             for transition in transition_tag[tag]:
-                transition_probability[tag][transition] = np.log2(transition_tag[tag][transition] / tags[tag])
+                transition_probability[tag][transition] = transition_tag[tag][transition] / tags[tag]
 
+        self.transition_tag = transition_tag
         return transition_probability
 
     def calculate_feature(self):
@@ -79,10 +80,10 @@ class Feature():
 
         for tag in self.emission_parameter.keys():
             for word in self.emission_parameter[tag]:
-                feature_dic["emission:" + tag + "+" +word] = self.emission_parameter[tag][word]
+                feature_dic["emission:" + tag + "+" +word] = np.log2(self.emission_parameter[tag][word])
         for word in self.transition_parameter.keys():
             for word2 in self.transition_parameter[word]:
-                feature_dic["transition:" + word + '+' + word2] = self.transition_parameter[word][word2]
+                feature_dic["transition:" + word + '+' + word2] = np.log2(self.transition_parameter[word][word2])
 
         return feature_dic
 
