@@ -4,6 +4,9 @@ from pprint import pprint
 import numpy as np
 import os
 
+import warnings
+warnings.filterwarnings("ignore")
+
 
 class Feature():
     def __init__(self, path_train):

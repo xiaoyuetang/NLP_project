@@ -1,9 +1,13 @@
 from collections import defaultdict
+import tqdm
 from pprint import pprint
 import numpy as np
 import os
 
 from part1 import Feature, take
+
+import warnings
+warnings.filterwarnings("ignore")
 
 
 class CRF():
@@ -66,11 +70,11 @@ class CRF():
 
         # Initialization  stage
         for label in tags :
-            if label not in self.transition_parameter['##START##']: continue
-            emission = get_estimate(sequence, self.train_set, label)
+            if label not in self.transition_parameter['START']: continue
+            emission = self.get_estimate(sequence, label)
 
 
-            pi[0][label] = [self.transition_parameter['##START##'][label] * emission]
+            pi[0][label] = [self.transition_parameter['START'][label] * emission]
 
         for k in tqdm.tqdm(range(1, len(sequence))):
             for label in tags:
@@ -82,21 +86,21 @@ class CRF():
                 piList.sort(reverse=True)
                 pi[k][label]=piList[0]
 
-                if sequence[k] in trainingSet:
-                    if sequence[k] in self.transition_parameter[label]:
-                        emission = self.transition_parameter[label][sequence[k]]
+                if sequence[k] in self.train_set:
+                    if sequence[k] in self.emission_parameter[label]:
+                        emission = self.emission_parameter[label][sequence[k]]
                     else:
                         emission = 0.0
                 else:
-                    emission = self.transition_parameter[label]['#UNK#']
+                    emission = self.emission_parameter[label]['#UNK#']
                 pi[k][label][0] *= emission
 
         # Finally
         slist=[]
         result = [0.0, '']
         for trans_tag in tags:
-            if '##STOP##' not in self.transition_parameter[trans_tag]: continue
-            score = pi[-1][trans_tag][0] * self.transition_parameter[trans_tag]['##STOP##']
+            if 'STOP' not in self.transition_parameter[trans_tag]: continue
+            score = pi[-1][trans_tag][0] * self.transition_parameter[trans_tag]['STOP']
             slist.append([score, trans_tag])
         slist.sort(reverse=True)
         result = slist[0]
@@ -112,10 +116,11 @@ class CRF():
 
         return prediction
 
-    def get_estimate(sequence, label, k=0):
+    def get_estimate(self, sequence, label):
         '''
         function to deal with unseen data.
         '''
+        k = 0
         if sequence[k] in self.train_set:
             if sequence[k] in self.emission_parameter[label]:
                 emission = self.emission_parameter[label][sequence[k]]
@@ -130,7 +135,7 @@ class CRF():
 if __name__ == "__main__":
     crf = CRF(os.path.join(os.path.dirname( __file__ ),"..", "data", "partial", "train"))
     input_path = os.path.join(os.path.dirname( __file__ ),"..", "data", "partial", "dev.in")
-    output_path = os.path.join(os.path.dirname( __file__ ),"..", "partial", "dev.p2.out")
+    output_path = os.path.join(os.path.dirname( __file__ ),"..", "data", "partial", "dev.p2.out")
 
     n_items = take(5, crf.score_dict.items())
     pprint(n_items)
