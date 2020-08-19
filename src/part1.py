@@ -4,6 +4,7 @@ from pprint import pprint
 import numpy as np
 import os
 
+
 class Feature():
     def __init__(self, path_train):
         self.path_train = path_train
@@ -13,6 +14,10 @@ class Feature():
         self.feature_dict = self.calculate_feature(self.emission_para, self.transition_para)
 
     def calculate_emiss_parameter(self, tags, words, label_words):
+        '''
+        a function to estimate the following emission probabilities
+        based on the training set.
+        '''
         emission_prbability = {}
         for tag in label_words:
             emission_prbability[tag] = {}
@@ -21,6 +26,9 @@ class Feature():
         return emission_prbability
 
     def calculate_trans_parameter(self, file_path):
+        '''
+        a function to estimate the transition probabilities.
+        '''
         tags = {}
         transition_tag = {}
         transition_probability = {}
@@ -53,6 +61,9 @@ class Feature():
         return transition_probability
 
     def calculate_feature(self, emission_parameter, transition_parameter):
+        '''
+        create feature dictionary based on emission and transition probability.
+        '''
         feature_dic = defaultdict()
 
         for tag in emission_parameter.keys():
@@ -64,30 +75,30 @@ class Feature():
 
         return feature_dic
 
-    def data_processing(self, filePath):
+    def data_processing(self, file_path):
         tags = {}
         words = {}
-        labelWords = {}
+        label_words = {}
 
-        for line in open(filePath, encoding='utf-8', mode='r'):
-            segmentedLine = line.strip()
-            if segmentedLine:
-                word, tag = self.line_cut(segmentedLine)
+        for line in open(file_path, encoding='utf-8', mode='r'):
+            segmented_line = line.strip()
+            if segmented_line:
+                word, tag = self.line_cut(segmented_line)
                 if word not in words:
                     words[word] = 1
                 else:
                     words[word] += 1
                 if tag not in tags:
                     tags[tag] = 1
-                    labelWords[tag] = {word: 1}
+                    label_words[tag] = {word: 1}
                 else:
                     tags[tag] += 1
-                    if word not in labelWords[tag]:
-                        labelWords[tag][word] = 1
+                    if word not in label_words[tag]:
+                        label_words[tag][word] = 1
                     else:
-                        labelWords[tag][word] += 1
+                        label_words[tag][word] += 1
 
-        return tags, words, labelWords
+        return tags, words, label_words
 
     def line_cut(self, segmented_line):
         segmented_line = segmented_line.rsplit(' ', 1)
