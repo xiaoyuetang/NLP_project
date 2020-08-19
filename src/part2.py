@@ -133,9 +133,10 @@ class CRF():
 
 
 if __name__ == "__main__":
-    crf = CRF(os.path.join(os.path.dirname( __file__ ),"..", "data", "partial", "train"))
-    input_path = os.path.join(os.path.dirname( __file__ ),"..", "data", "partial", "dev.in")
-    output_path = os.path.join(os.path.dirname( __file__ ),"..", "data", "partial", "dev.p2.out")
+    dataset = os.path.join(os.path.dirname( __file__ ),"..", "data", "partial")
+    crf = CRF(os.path.join(dataset, "train"))
+    input_path = os.path.join(dataset, "dev.in")
+    output_path = os.path.join(dataset, "dev.p2.out")
 
     n_items = take(5, crf.score_dict.items())
     pprint(n_items)
