@@ -80,15 +80,15 @@ class Feature():
 
         for tag in self.emission_parameter.keys():
             for word in self.emission_parameter[tag]:
-                feature_dic["emission:" + tag + "+" +word] = np.log2(self.emission_parameter[tag][word])
+                feature_dic["emission:" + tag + "+" +word] = np.log(self.emission_parameter[tag][word])
         for word in self.transition_parameter.keys():
             for word2 in self.transition_parameter[word]:
-                feature_dic["transition:" + word + '+' + word2] = np.log2(self.transition_parameter[word][word2])
+                feature_dic["transition:" + word + '+' + word2] = np.log(self.transition_parameter[word][word2])
 
         return feature_dic
 
     def get_feature_weight(self, tag, word, type):
-        return self.feature_dict["{}:{}+{}".format(type, tag, word)]
+        return self.feature_dict.get("{}:{}+{}".format(type, tag, word), 0)
 
     def data_processing(self):
         tags = {}

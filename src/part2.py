@@ -5,7 +5,6 @@ import numpy as np
 import os
 
 from part1 import Feature, take
-
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -39,8 +38,21 @@ class CRF():
 
         return score_dict
 
-    def get_score(self):
-        return sum(self.score_dict.values())
+    def get_score(self, x, y):
+        dic = defaultdict(int)
+
+        # count number of times each feature occured in the provided sequence
+        for i in range(len(x)):
+            dic["emission:{}+{}".format(y[i], x[i])] += 1
+        y = ["START"] + y + ["STOP"]
+        for i in range(1, len(y)):
+            dic["transition:{}+{}".format(y[i - 1], y[i])] += 1
+
+        # multiply weights with the number of occurences for each feature
+        out = 0
+        for key in dic:
+            out += dic[key] * self.feature_dict[key]
+        return out
 
     def inference(self, input_path, output_path):
         '''
@@ -145,7 +157,7 @@ if __name__ == "__main__":
     crf = CRF(os.path.join(dataset, "train"))
     input_path = os.path.join(dataset, "dev.in")
     output_path = os.path.join(dataset, "dev.p2.out")
-
+    # train = Train(os.path.join(dataset, "train"))
     n_items = take(5, crf.score_dict.items())
     pprint(n_items)
 
