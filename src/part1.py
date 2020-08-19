@@ -7,73 +7,64 @@ import os
 class Feature():
     def __init__(self, path_train):
         self.path_train = path_train
-        self.train_data, self.train_x, self.train_y = self.generate_data(self.path_train)
-        self.tags, self.words, self.labelWords = self.dataProcessing(self.path_train)
-        self.emission_para = self.calculate_emiss_parameter(self.tags, self.words, self.labelWords)
+        self.tags, self.words, self.label_words = self.data_processing(self.path_train)
+        self.emission_para = self.calculate_emiss_parameter(self.tags, self.words, self.label_words)
         self.transition_para = self.calculate_trans_parameter(self.path_train)
         self.feature_dict = self.calculate_feature(self.emission_para, self.transition_para)
 
-    def calculate_emiss_parameter(self, tags, words, labelWords):
-        emissionPrbability = {}
-        for tag in labelWords:
-            emissionPrbability[tag] = {}
-            for word in list(labelWords[tag]):
-                emissionPrbability[tag][word] = labelWords[tag][word] / tags[tag]
-        return emissionPrbability
+    def calculate_emiss_parameter(self, tags, words, label_words):
+        emission_prbability = {}
+        for tag in label_words:
+            emission_prbability[tag] = {}
+            for word in list(label_words[tag]):
+                emission_prbability[tag][word] = np.log2(label_words[tag][word] / tags[tag])
+        return emission_prbability
 
-    def calculate_trans_parameter(self, filePath):
+    def calculate_trans_parameter(self, file_path):
         tags = {}
-        transitionTag = {}
-        transitionProbability = {}
+        transition_tag = {}
+        transition_probability = {}
         _preT = ''
         _newT = 'START'
-        for line in open(filePath, encoding='utf-8', mode='r'):
+        for line in open(file_path, encoding='utf-8', mode='r'):
             _preT = _newT if (_newT != 'STOP') else 'START'
-            segmentedLine = line.rstrip()
+            segmented_line = line.rstrip()
 
-            if segmentedLine:
-                segmentedLine = segmentedLine.rsplit(' ', 1)
-                _newT = segmentedLine[1]
+            if segmented_line:
+                segmented_line = segmented_line.rsplit(' ', 1)
+                _newT = segmented_line[1]
             else:
                 _newT = 'STOP'
             if _preT not in tags:
                 tags[_preT] = 1
-                transitionTag[_preT] = {_newT: 1}
+                transition_tag[_preT] = {_newT: 1}
             else:
                 tags[_preT] += 1
-                if _newT not in transitionTag[_preT]:
-                    transitionTag[_preT][_newT] = 1
+                if _newT not in transition_tag[_preT]:
+                    transition_tag[_preT][_newT] = 1
                 else:
-                    transitionTag[_preT][_newT] += 1
+                    transition_tag[_preT][_newT] += 1
 
-        for tag in transitionTag:
-            transitionProbability[tag] = {}
-            for transition in transitionTag[tag]:
-                transitionProbability[tag][transition] = transitionTag[tag][transition] / tags[tag]
+        for tag in transition_tag:
+            transition_probability[tag] = {}
+            for transition in transition_tag[tag]:
+                transition_probability[tag][transition] = np.log2(transition_tag[tag][transition] / tags[tag])
 
-        return transitionProbability
+        return transition_probability
 
     def calculate_feature(self, emission_parameter, transition_parameter):
         feature_dic = defaultdict()
 
         for tag in emission_parameter.keys():
             for word in emission_parameter[tag]:
-                feature_dic["emission:" + tag + "+" +word] = np.log2(emission_parameter[tag][word])
+                feature_dic["emission:" + tag + "+" +word] = emission_parameter[tag][word]
         for word in transition_parameter.keys():
             for word2 in transition_parameter[word]:
-                feature_dic["transition:" + word + '+' + word2] = np.log2(transition_parameter[word][word2])
+                feature_dic["transition:" + word + '+' + word2] = transition_parameter[word][word2]
 
         return feature_dic
-    def generate_data(self, path_train):
-        train_lines = list(filter(None, open(path_train).read().splitlines()))
 
-        train_data = [line.split() for line in train_lines]
-        train_x = [line[0] for line in train_data if line]
-        train_y = [line[1] for line in train_data if line]
-
-        return train_data, train_x, train_y
-
-    def dataProcessing(self, filePath):
+    def data_processing(self, filePath):
         tags = {}
         words = {}
         labelWords = {}
@@ -81,7 +72,7 @@ class Feature():
         for line in open(filePath, encoding='utf-8', mode='r'):
             segmentedLine = line.strip()
             if segmentedLine:
-                word, tag = self.lineCut(segmentedLine)
+                word, tag = self.line_cut(segmentedLine)
                 if word not in words:
                     words[word] = 1
                 else:
@@ -98,10 +89,10 @@ class Feature():
 
         return tags, words, labelWords
 
-    def lineCut(self, segmentedLine):
-        segmentedLine = segmentedLine.rsplit(' ', 1)
-        word = segmentedLine[0]
-        tag = segmentedLine[1]
+    def line_cut(self, segmented_line):
+        segmented_line = segmented_line.rsplit(' ', 1)
+        word = segmented_line[0]
+        tag = segmented_line[1]
         return word, tag
 
 
