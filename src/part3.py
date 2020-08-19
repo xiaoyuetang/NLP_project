@@ -48,7 +48,7 @@ class Train():
             labels = tags[i]
             term1 = self.crf.get_score(sentence, labels)
             term2 = self.forward_algo(sentence)
-            out = term1-term2
+            out += term1-term2
             # print(term2)
             # term2_sum += term2
         return -out
@@ -80,5 +80,6 @@ if __name__ == '__main__':
     train = Train(train_path)
 
     sentences, tags = get_sentences_tags(train_path)
+    print(len(sentences), len(tags))
     out = train.loss_function(sentences, tags)
     print(out)
