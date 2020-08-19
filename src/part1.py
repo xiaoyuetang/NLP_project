@@ -2,11 +2,6 @@ from collections import defaultdict
 import numpy as np
 
 
-def zerolistmaker(n):
-    listofzeros = [-1e99] * n
-    return listofzeros
-
-
 def calculate_emission_parameter(train_data, train_x, train_y):
     # iter_num = 0  # can be deleted later
     print('----------------------------- Estimating the emission parameter ------------------------')
@@ -23,7 +18,25 @@ def calculate_emission_parameter(train_data, train_x, train_y):
     return emission_parameter
 
 
-def estimateTransition(filePath):
+def smoothedEstimation(tags,words,labelWords,k):
+    emissionPrbability = {}
+    for tag in labelWords:
+        emissionPrbability[tag] = {}
+        # labelWords[tag]['#UNK#'] = 0
+        for word in list(labelWords[tag]):
+            if word not in words:
+                labelWords[tag]['#UNK#'] += labelWords[tag].pop(word)
+            elif words[word] < k:
+                labelWords[tag]['#UNK#'] += labelWords[tag].pop(word)
+                del words[word]
+            else:
+                emissionPrbability[tag][word] = labelWords[tag][word] / tags[tag]
+        # emissionPrbability[tag]['#UNK#'] = labelWords[tag]['#UNK#'] / tags[tag]
+    trainFile= list(words)
+    return trainFile,emissionPrbability
+
+
+def calculate_trans_parameter(filePath):
     tags = {}
     transitionTag = {}
     transitionProbability = {}
@@ -60,23 +73,53 @@ def calculateTransitionProbability(transitionProbability, transitionTag, tags):
             transitionProbability[tag][transition] = transitionTag[tag][transition] / tags[tag]
 
 
-
-def calculate_feature(train_data, emission_parameter, transition_parameter):
+def calculate_feature(emission_parameter, transition_parameter):
     feature_dic = defaultdict()
 
-    # for pair in train_data:
-    #     idx = emission_parameter[pair[0]][0].index(pair[1])
-    #     feature_dic["emission:"+pair[1]+'+'+pair[0]] = np.log2(emission_parameter[pair[0]][1][idx])
-
-    for word in emission_parameter.keys():
-        for idx, tag in enumerate(emission_parameter[word][0]):
-            feature_dic["emission:" + tag + '+' + word] = np.log2(emission_parameter[word][1][idx])
+    # for word in emission_parameter.keys():
+    #     for idx, tag in enumerate(emission_parameter[word][0]):
+    #         feature_dic["emission:" + tag + '+' + word] = np.log2(emission_parameter[word][1][idx])
+    for tag in emission_parameter.keys():
+        for word in emission_parameter[tag]:
+            feature_dic["emission:" + tag + "+" +word] = np.log2(emission_parameter[tag][word])
     for word in transition_parameter.keys():
         for word2 in transition_parameter[word]:
             feature_dic["transition:" + word + '+' + word2] = np.log2(transition_parameter[word][word2])
 
-
     return feature_dic
+
+
+def dataProcessing(filePath):
+    tags = {}
+    words = {}
+    labelWords = {}
+
+    for line in open(filePath, encoding='utf-8', mode='r'):
+        segmentedLine = line.strip()
+        if segmentedLine:
+            word, tag = lineCut(segmentedLine)
+            if word not in words:
+                words[word] = 1
+            else:
+                words[word] += 1
+            if tag not in tags:
+                tags[tag] = 1
+                labelWords[tag] = {word: 1}
+            else:
+                tags[tag] += 1
+                if word not in labelWords[tag]:
+                    labelWords[tag][word] = 1
+                else:
+                    labelWords[tag][word] += 1
+
+    return tags, words, labelWords
+
+
+def lineCut(segmentedLine):
+    segmentedLine = segmentedLine.rsplit(' ', 1)
+    word = segmentedLine[0]
+    tag = segmentedLine[1]
+    return word,tag
 
 
 if __name__ == '__main__':
@@ -91,23 +134,12 @@ if __name__ == '__main__':
     train_x = [line[0] for line in train_data if line]
     train_y = [line[1] for line in train_data if line]
 
-    tag_list_tr = list(dict.fromkeys(train_y))
-    tag_dict = {}
-    for idx, tag in enumerate(train_y):
-        tag_dict[tag] = idx
-
-    emission_para = calculate_emission_parameter(train_data, train_x, train_y)
-
-    # train_y_tr = modify_train_data_tr(train_lines, modified_train_path_tr)
-    # tag_list_tr = list(dict.fromkeys(train_y_tr))
-    # tag_dict = {}
-    # for idx, tag in enumerate(tag_list_tr):
-    #     tag_dict[tag]=idx
-    # transition_para = calculate_transition_parameter(train_y_tr, tag_list_tr, tag_dict)
-    # # print(transition_para)
-    transition_para = estimateTransition(path_train)
-
-    feature = calculate_feature(train_data, emission_para, transition_para)
+    # emission_para = calculate_emission_parameter(train_data, train_x, train_y)
+    tags,words,labelWords= dataProcessing(path_train)
+    trainFile,emission_para = smoothedEstimation(tags,words,labelWords,k=-1)
+    transition_para = calculate_trans_parameter(path_train)
+    # print(emission_para)
+    feature = calculate_feature(emission_para, transition_para)
     print(feature)
 
 
