@@ -3,15 +3,15 @@ from pprint import pprint
 import numpy as np
 import os
 
-from part1 import Feature
+from part1 import Feature, take
 
 
 class CRF():
     def __init__(self, path_train):
         self.feature = Feature(path_train)
         self.feature_dict = self.feature.feature_dict
-        self.emission_para = self.feature.emission_para
-        self.transition_para = self.feature.transition_para
+        self.emission_parameter = self.feature.emission_parameter
+        self.transition_parameter = self.feature.transition_parameter
         self.score_dict = self.calculate_score()
         self.train_set = list(self.feature.words)
 
@@ -60,46 +60,47 @@ class CRF():
         perform decoding using the Viterbi algorithm to find the most
         probable output sequence y∗ for an input sequence x.
         '''
-        tags = list(self.emission_para)
+        tags = list(self.emission_parameter)
 
         pi = [{tag: [0.0, ''] for tag in tags} for o in sequence]
 
         # Initialization  stage
         for label in tags :
-            if label not in transitionEstimates['##START##']: continue
-            emission = getEstimate(sequence, self.train_set, label)
+            if label not in self.transition_parameter['##START##']: continue
+            emission = get_estimate(sequence, self.train_set, label)
 
 
-            pi[0][label] = [transitionEstimates['##START##'][label] * emission]
+            pi[0][label] = [self.transition_parameter['##START##'][label] * emission]
 
         for k in tqdm.tqdm(range(1, len(sequence))):
             for label in tags:
                 piList=[]
                 for transTag in tags:
-                    if label not in transitionEstimates[transTag]: continue
-                    score = pi[k-1][transTag][0] * transitionEstimates[transTag][label]
+                    if label not in self.transition_parameter[transTag]: continue
+                    score = pi[k-1][transTag][0] * self.transition_parameter[transTag][label]
                     piList.append([score, transTag])
                 piList.sort(reverse=True)
                 pi[k][label]=piList[0]
 
                 if sequence[k] in trainingSet:
-                    if sequence[k] in emissionEstimates[label]:
-                        emission = emissionEstimates[label][sequence[k]]
+                    if sequence[k] in self.transition_parameter[label]:
+                        emission = self.transition_parameter[label][sequence[k]]
                     else:
                         emission = 0.0
                 else:
-                    emission = emissionEstimates[label]['#UNK#']
+                    emission = self.transition_parameter[label]['#UNK#']
                 pi[k][label][0] *= emission
 
         # Finally
         slist=[]
         result = [0.0, '']
-        for transTag in tags:
-            if '##STOP##' not in transitionEstimates[transTag]: continue
-            score = pi[-1][transTag][0] * transitionEstimates[transTag]['##STOP##']
-            slist.append([score, transTag])
+        for trans_tag in tags:
+            if '##STOP##' not in self.transition_parameter[trans_tag]: continue
+            score = pi[-1][trans_tag][0] * self.transition_parameter[trans_tag]['##STOP##']
+            slist.append([score, trans_tag])
         slist.sort(reverse=True)
-        result=slist[0]
+        result = slist[0]
+
         # Backtracking
         if not result[1]:
             return
@@ -112,17 +113,26 @@ class CRF():
         return prediction
 
     def get_estimate(sequence, label, k=0):
+        '''
+        function to deal with unseen data.
+        '''
         if sequence[k] in self.train_set:
-            if sequence[k] in self.emission_para[label]:
-                emission = self.emission_para[label][sequence[k]]
+            if sequence[k] in self.emission_parameter[label]:
+                emission = self.emission_parameter[label][sequence[k]]
             else:
-                emission = 0.0
+                emission = np.log2(0.0)
         else:
-            emission = self.emission_para[label]['#UNK#']
+            emission = self.emission_parameter[label]['#UNK#']
         return emission
 
 
 
 if __name__ == "__main__":
-    crf = CRF(os.path.join(os.path.dirname( __file__ ),"..","data","partial","train"))
-    pprint(crf.score_dict)
+    crf = CRF(os.path.join(os.path.dirname( __file__ ),"..", "data", "partial", "train"))
+    input_path = os.path.join(os.path.dirname( __file__ ),"..", "data", "partial", "dev.in")
+    output_path = os.path.join(os.path.dirname( __file__ ),"..", "partial", "dev.p2.out")
+
+    n_items = take(5, crf.score_dict.items())
+    pprint(n_items)
+
+    crf.inference(input_path, output_path)

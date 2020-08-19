@@ -121,8 +121,7 @@ def take(n, iterable):
 
 
 if __name__ == '__main__':
-    feature = Feature(os.path.join(os.path.dirname( __file__ ),"..","data","partial","train"))
+    feature = Feature(os.path.join(os.path.dirname( __file__ ),"..", "data", "partial", "train"))
     feature_dict = feature.feature_dict
     n_items = take(5, feature_dict.items())
     pprint(n_items)
-    # pprint(feature.label_words)
