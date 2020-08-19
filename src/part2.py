@@ -39,10 +39,14 @@ class CRF():
 
         return score_dict
 
+    def get_score(self):
+        return sum(self.score_dict.values())
+
     def inference(self, input_path, output_path):
         '''
-        an inference for using viterbi.
+        an inference for using Viterbi.
         '''
+        print("Start Viterbi...")
         f = open(output_path, encoding='utf-8', mode= 'w')
         sequence = []
         for line in open(input_path, encoding='utf-8', mode='r'):
