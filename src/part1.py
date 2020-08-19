@@ -85,6 +85,9 @@ class Feature():
                 feature_dic["transition:" + word + '+' + word2] = self.transition_parameter[word][word2]
 
         return feature_dic
+        
+    def get_feature_weight(self, tag, word, type):
+        return self.feature_dict["{}:{}+{}".format(type, tag, word)]
 
     def data_processing(self):
         tags = {}
