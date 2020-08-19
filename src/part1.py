@@ -8,24 +8,32 @@ import os
 class Feature():
     def __init__(self, path_train):
         self.path_train = path_train
-        self.tags, self.words, self.label_words = self.data_processing(self.path_train)
-        self.emission_para = self.calculate_emiss_parameter(self.tags, self.words, self.label_words)
-        self.transition_para = self.calculate_trans_parameter(self.path_train)
-        self.feature_dict = self.calculate_feature(self.emission_para, self.transition_para)
+        self.tags, self.words, self.label_words = self.data_processing()
+        self.emission_parameter= self.calculate_emiss_parameter()
+        self.transition_parameter = self.calculate_trans_parameter()
+        self.feature_dict = self.calculate_feature()
 
-    def calculate_emiss_parameter(self, tags, words, label_words):
+    def calculate_emiss_parameter(self):
         '''
         a function to estimate the following emission probabilities
         based on the training set.
         '''
         emission_prbability = {}
-        for tag in label_words:
+        for tag in self.label_words:
             emission_prbability[tag] = {}
-            for word in list(label_words[tag]):
-                emission_prbability[tag][word] = np.log2(label_words[tag][word] / tags[tag])
+            self.label_words[tag]['#UNK#'] = 0
+            for word in list(self.label_words[tag]):
+                if word not in self.words:
+                    self.label_words[tag]['#UNK#'] += self.label_words[tag].pop(word)
+                elif self.words[word] < 3:
+                    self.label_words[tag]['#UNK#'] += self.label_words[tag].pop(word)
+                    del self.words[word]
+                else:
+                    emission_prbability[tag][word] = self.label_words[tag][word] / self.tags[tag]
+            emission_prbability[tag]['#UNK#'] = self.label_words[tag]['#UNK#'] / self.tags[tag]
         return emission_prbability
 
-    def calculate_trans_parameter(self, file_path):
+    def calculate_trans_parameter(self):
         '''
         a function to estimate the transition probabilities.
         '''
@@ -34,7 +42,7 @@ class Feature():
         transition_probability = {}
         _preT = ''
         _newT = 'START'
-        for line in open(file_path, encoding='utf-8', mode='r'):
+        for line in open(self.path_train, encoding='utf-8', mode='r'):
             _preT = _newT if (_newT != 'STOP') else 'START'
             segmented_line = line.rstrip()
 
@@ -60,27 +68,27 @@ class Feature():
 
         return transition_probability
 
-    def calculate_feature(self, emission_parameter, transition_parameter):
+    def calculate_feature(self):
         '''
         create feature dictionary based on emission and transition probability.
         '''
         feature_dic = defaultdict()
 
-        for tag in emission_parameter.keys():
-            for word in emission_parameter[tag]:
-                feature_dic["emission:" + tag + "+" +word] = emission_parameter[tag][word]
-        for word in transition_parameter.keys():
-            for word2 in transition_parameter[word]:
-                feature_dic["transition:" + word + '+' + word2] = transition_parameter[word][word2]
+        for tag in self.emission_parameter.keys():
+            for word in self.emission_parameter[tag]:
+                feature_dic["emission:" + tag + "+" +word] = self.emission_parameter[tag][word]
+        for word in self.transition_parameter.keys():
+            for word2 in self.transition_parameter[word]:
+                feature_dic["transition:" + word + '+' + word2] = self.transition_parameter[word][word2]
 
         return feature_dic
 
-    def data_processing(self, file_path):
+    def data_processing(self):
         tags = {}
         words = {}
         label_words = {}
 
-        for line in open(file_path, encoding='utf-8', mode='r'):
+        for line in open(self.path_train, encoding='utf-8', mode='r'):
             segmented_line = line.strip()
             if segmented_line:
                 word, tag = self.line_cut(segmented_line)
@@ -117,3 +125,4 @@ if __name__ == '__main__':
     feature_dict = feature.feature_dict
     n_items = take(5, feature_dict.items())
     pprint(n_items)
+    # pprint(feature.label_words)

@@ -13,6 +13,7 @@ class CRF():
         self.emission_para = self.feature.emission_para
         self.transition_para = self.feature.transition_para
         self.score_dict = self.calculate_score()
+        self.train_set = list(self.feature.words)
 
     def calculate_score(self):
         '''
@@ -30,6 +31,9 @@ class CRF():
         return score_dict
 
     def inference(self, input_path, output_path):
+        '''
+        an inference for using viterbi.
+        '''
         f = open(output_path, encoding='utf-8', mode= 'w')
         sequence = []
         for line in open(input_path, encoding='utf-8', mode='r'):
@@ -48,8 +52,8 @@ class CRF():
                 f.write('\n')
                 sequence = []
 
-    print ('Finished writing to file')
-    return f.close()
+        print ('Finished writing to file')
+        return f.close()
 
     def viterbi(self, sequence):
         '''
@@ -63,7 +67,7 @@ class CRF():
         # Initialization  stage
         for label in tags :
             if label not in transitionEstimates['##START##']: continue
-            emission=getEstimate(sequence,trainingSet,label)
+            emission = getEstimate(sequence, self.train_set, label)
 
 
             pi[0][label] = [transitionEstimates['##START##'][label] * emission]
@@ -106,6 +110,16 @@ class CRF():
             prediction.insert(0, pi[k][prediction[0]][1])
 
         return prediction
+
+    def get_estimate(sequence, label, k=0):
+        if sequence[k] in self.train_set:
+            if sequence[k] in self.emission_para[label]:
+                emission = self.emission_para[label][sequence[k]]
+            else:
+                emission = 0.0
+        else:
+            emission = self.emission_para[label]['#UNK#']
+        return emission
 
 
 
