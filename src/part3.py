@@ -5,6 +5,9 @@ from collections import defaultdict
 from part1 import Feature
 from part2 import CRF
 
+import warnings
+warnings.filterwarnings("ignore")
+
 
 class Train():
     def __init__(self, train_path):
