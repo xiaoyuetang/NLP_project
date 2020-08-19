@@ -80,7 +80,7 @@ class Feature():
 
         for tag in self.emission_parameter.keys():
             for word in self.emission_parameter[tag]:
-                feature_dic["emission:" + tag + "+" +word] = np.log(self.emission_parameter[tag][word])
+                feature_dic["emission:" + tag + "+" + word] = np.log(self.emission_parameter[tag][word])
         for word in self.transition_parameter.keys():
             for word2 in self.transition_parameter[word]:
                 feature_dic["transition:" + word + '+' + word2] = np.log(self.transition_parameter[word][word2])
