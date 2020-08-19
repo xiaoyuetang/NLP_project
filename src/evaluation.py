@@ -19,13 +19,22 @@ def eval(pred_path, gold_path, out_path):
             if len(words_gold)==1:
                 continue
 
-            gold_tags.append(words_gold[1])
-            pred_tags.append(words_pred[1])
-            wf.write(words_pred[0] + " " + words_pred[1] + " " + words_gold[1] +"\n")
+            elif len(words_gold)==2:
+                gold_tags.append(words_gold[1])
+                pred_tags.append(words_pred[1])
+                wf.write(words_pred[0] + " " + words_pred[1] + " " + words_gold[1] +"\n")
 
-    print(evaluate(gold_tags, pred_tags, verbose=True))
+            else:
+                gold_tags.append(words_gold[2])
+                pred_tags.append(words_pred[2])
+                wf.write(words_pred[0] + " " + words_pred[2] + " " + words_gold[2] +"\n")
+
+    print(evaluate(gold_tags, pred_tags, verbose=True), "\n")
 
 
 if __name__ == "__main__":
-    dataset = os.path.join(os.path.dirname( __file__ ),"..", "data", "partial")
-    eval(dataset+'/dev.p2.out', dataset+'/dev.out', dataset+'/eval.p2.out')
+    dataset_full = os.path.join(os.path.dirname( __file__ ),"..", "data", "full")
+    dataset_partial = os.path.join(os.path.dirname( __file__ ),"..", "data", "partial")
+    eval(dataset_partial+'/dev.p2.out', dataset_partial+'/dev.out', dataset_partial+'/eval.p2.out')
+    eval(dataset_full+'/dev.p5.CRF.f3.out', dataset_full+'/dev.out', dataset_full+'/eval.p5.CRF.f3.out')
+    eval(dataset_full+'/dev.p5.CRF.f4.out', dataset_full+'/dev.out', dataset_full+'/eval.p5.CRF.f4.out')

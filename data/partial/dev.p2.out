@@ -28,22 +28,22 @@ British B-gpe
 forces O
 , O
 based O
-in B-art
-the I-art
-mainly I-art
-Shi'ite I-art
-south I-art
-, I-art
-have I-art
-suffered I-art
-far I-art
-fewer I-art
-losses I-art
-than I-art
-the I-art
-much I-art
-larger I-art
-U.S. B-geo
+in O
+the O
+mainly O
+Shi'ite O
+south O
+, O
+have O
+suffered O
+far O
+fewer O
+losses O
+than O
+the O
+much O
+larger O
+U.S. O
 force O
 fighting O
 Sunni O
@@ -61,8 +61,8 @@ Iraq O
 
 The O
 massive O
-exodus B-tim
-of I-tim
+exodus O
+of O
 hundreds O
 of O
 thousands O
@@ -159,9 +159,9 @@ said O
 it O
 will O
 donate O
-another B-tim
-batch I-tim
-of I-tim
+another O
+batch O
+of O
 Tamiflu O
 , O
 an O
@@ -187,7 +187,7 @@ pandemic O
 
 The O
 International O
-Committee O
+Committee B-org
 of O
 the O
 Red O
@@ -208,8 +208,8 @@ war O
 . O
 
 Some O
-supporters B-tim
-of I-tim
+supporters O
+of O
 the O
 president O
 threw O
@@ -225,7 +225,7 @@ The O
 rebels O
 promised O
 in O
-March O
+March B-tim
 they O
 would O
 disarm O
@@ -236,7 +236,7 @@ by O
 the O
 end O
 of O
-October O
+October B-tim
 . O
 
 They O
@@ -269,7 +269,7 @@ polio O
 immunization O
 campaign O
 on O
-Wednesday B-tim
+Wednesday O
 with O
 over O
 1,00,000 O
@@ -284,8 +284,8 @@ part O
 President B-per
 Bush I-per
 praised O
-Iraqis B-art
-for I-art
+Iraqis B-gpe
+for O
 voting O
 despite O
 threats O
@@ -335,7 +335,7 @@ ethical O
 . O
 
 Mr. B-per
-Nowak I-per
+Nowak O
 's O
 visit O
 to O
@@ -416,19 +416,19 @@ April O
 . O
 
 A O
-series B-tim
-of I-tim
+series O
+of O
 explosions O
 shook O
 the O
-Iraqi B-gpe
+Iraqi O
 capital O
 Wednesday O
 , O
 while O
 a O
 high-ranking O
-U.S. B-geo
+U.S. O
 official O
 visited O
 the O
@@ -440,8 +440,8 @@ Friday B-tim
 report O
 from O
 the O
-Commerce O
-Department O
+Commerce B-org
+Department I-org
 said O
 the O
 decline O
@@ -477,7 +477,7 @@ The O
 men O
 disappeared O
 on O
-Thursday B-tim
+Thursday O
 while O
 traveling O
 to O
@@ -499,7 +499,7 @@ Officials O
 and O
 witnesses O
 in O
-Somalia O
+Somalia B-geo
 say O
 at O
 least O
@@ -513,7 +513,7 @@ roadside O
 bomb O
 exploded O
 in O
-Mogadishu O
+Mogadishu B-geo
 Saturday B-tim
 near O
 the O
@@ -542,8 +542,8 @@ confirmed O
 The O
 interview O
 airs O
-August B-tim
-2 I-tim
+August O
+2 O
 and O
 3 O
 on O
@@ -559,22 +559,22 @@ on O
 20/20 O
 . O
 
-Supporters I-art
-of I-art
-Judge I-art
-Iftikhar I-art
-Mohammed I-art
-Chaudhry I-art
-chanted I-art
-slogans I-art
-Saturday I-art
-demanding I-art
-the I-art
-resignation I-art
-of I-art
-Pakistani I-art
-President B-per
-Pervez I-per
+Supporters O
+of O
+Judge O
+Iftikhar O
+Mohammed O
+Chaudhry O
+chanted O
+slogans O
+Saturday O
+demanding O
+the O
+resignation O
+of O
+Pakistani O
+President O
+Pervez O
 Musharraf O
 . O
 
@@ -599,7 +599,7 @@ reported O
 to O
 be O
 quiet O
-Saturday B-tim
+Saturday O
 , O
 with O
 Australian O
@@ -611,8 +611,8 @@ streets O
 
 Officials O
 say O
-most B-tim
-of I-tim
+most O
+of O
 the O
 passengers O
 were O
@@ -640,7 +640,7 @@ prayed O
 for O
 peace O
 on O
-Saturday B-tim
+Saturday O
 , O
 and O
 their O
@@ -709,7 +709,7 @@ leftist O
 " O
 
 Next O
-Wednesday B-tim
+Wednesday O
 's O
 start O
 for O
@@ -732,8 +732,8 @@ and O
 in O
 Busan O
 , O
-South B-geo
-Korea I-geo
+South O
+Korea O
 . O
 
 Irate O
@@ -781,8 +781,8 @@ This O
 Week O
 program O
 , O
-Mr. B-per
-Powell I-per
+Mr. O
+Powell O
 says O
 there O
 was O
@@ -827,24 +827,24 @@ Afghanistan B-geo
 has O
 killed O
 nine O
-Afghan B-gpe
+Afghan O
 soldiers O
 . O
 
 U.S. B-geo
 Assistant O
-Secretary B-tim
-of I-tim
-State O
+Secretary B-org
+of I-org
+State I-org
 Daniel O
 Fried O
 and O
-Special B-art
-Assistant I-art
-to I-art
-the I-art
-President B-per
-Thomas I-per
+Special O
+Assistant O
+to O
+the O
+President O
+Thomas O
 Graham O
 answered O
 questions O
@@ -856,8 +856,8 @@ House O
 interactive O
 website O
 about O
-President B-per
-Bush I-per
+President O
+Bush O
 's O
 VE O
 day O
@@ -871,12 +871,12 @@ and O
 Georgia O
 . O
 
-Thursday I-art
-, I-art
-the I-art
-U.S. B-geo
-State O
-Department O
+Thursday B-tim
+, O
+the O
+U.S. B-org
+State I-org
+Department I-org
 said O
 a O
 regional O
@@ -884,7 +884,7 @@ force O
 should O
 not O
 include O
-Somalia O
+Somalia B-geo
 's O
 immediate O
 neighbors O
@@ -983,7 +983,7 @@ also O
 found O
 the O
 deadly O
-H5N1 B-nat
+H5N1 O
 variety O
 of O
 avian O
@@ -1000,10 +1000,10 @@ They O
 also O
 discussed O
 creating O
-three B-tim
+three O
 non-permanent O
-seats B-art
-for I-art
+seats O
+for O
 African O
 countries O
 . O
@@ -1011,14 +1011,14 @@ countries O
 Officials O
 alleged O
 that O
-Khan O
+Khan B-per
 acted O
 as O
 a O
 link O
 between O
 top O
-al-Qaida O
+al-Qaida B-org
 leaders O
 and O
 the O
@@ -1056,9 +1056,9 @@ In O
 April B-tim
 2009 I-tim
 , O
-Croatia O
+Croatia B-geo
 joined O
-NATO O
+NATO B-org
 ; O
 it O
 is O
@@ -1074,8 +1074,8 @@ Police O
 say O
 they O
 have O
-arrested B-tim
-four I-tim
+arrested O
+four O
 suspects O
 in O
 connection O
@@ -1098,7 +1098,7 @@ to O
 close O
 it O
 after O
-Russia O
+Russia B-geo
 pledged O
 to O
 give O
@@ -1144,13 +1144,13 @@ rulers O
 In O
 a O
 statement O
-from B-geo
-Mexico I-geo
-City O
+from O
+Mexico B-geo
+City I-geo
 Friday B-tim
 , O
 Ambassador O
-Tony O
+Tony B-per
 Garza O
 said O
 the O
@@ -1185,7 +1185,7 @@ have O
 been O
 reported O
 in O
-Indonesia O
+Indonesia B-geo
 , O
 although O
 the O
@@ -1217,8 +1217,8 @@ But O
 eighth-seeded O
 Juan O
 Ignacio O
-Chela B-tim
-of I-tim
+Chela O
+of O
 Argentina O
 was O
 upset O
@@ -1301,8 +1301,8 @@ US O
 ) O
 . O
 
-One I-tim
-of I-tim
+One O
+of O
 the O
 passengers O
 , O
@@ -1323,7 +1323,7 @@ cooperation O
 between O
 France O
 and O
-Iraq B-geo
+Iraq O
 . O
 
 The O
@@ -1370,7 +1370,7 @@ launched O
 an O
 attack O
 on O
-Khartoum O
+Khartoum B-geo
 and O
 the O
 neighboring O
@@ -1422,7 +1422,7 @@ shot O
 
 Earlier O
 , O
-NATO O
+NATO B-org
 officials O
 said O
 Afghan B-gpe
@@ -1482,11 +1482,11 @@ anyway O
 . O
 
 In O
-recent B-tim
+recent O
 weeks O
 , O
 4,000 O
-U.S. B-geo
+U.S. O
 Marines O
 , O
 along O
@@ -1514,8 +1514,8 @@ traditional O
 strongholds O
 . O
 
-The O
-International O
+The B-org
+International I-org
 Atomic O
 Energy O
 Agency O
@@ -1552,7 +1552,7 @@ Football O
 League O
 playoffs O
 continue O
-Saturday B-tim
+Saturday O
 when O
 the O
 Pittsburgh O
@@ -1574,12 +1574,12 @@ The O
 U.S.-led O
 coalition O
 in O
-Afghanistan O
+Afghanistan B-geo
 says O
 at O
 least O
 25 O
-Taleban O
+Taleban B-org
 rebels O
 have O
 been O
@@ -1625,7 +1625,7 @@ citizens O
 Maduro O
 rejected O
 a O
-U.S. B-geo
+U.S. O
 apology O
 for O
 the O
@@ -1664,10 +1664,10 @@ Islam O
 French B-gpe
 President B-per
 Nicolas I-per
-Sarkozy O
+Sarkozy I-per
 says O
-European O
-Union O
+European B-org
+Union I-org
 leaders O
 have O
 agreed O
@@ -1700,24 +1700,24 @@ broadcast O
 on O
 U.S. B-geo
 radio O
-Saturday O
+Saturday B-tim
 , O
-Mr. O
-Bush O
-said B-art
-the I-art
-prescription I-art
-drug I-art
-program I-art
-is I-art
-the I-art
-greatest I-art
-advance I-art
-in I-art
-health I-art
-care I-art
-for I-art
-U.S. B-geo
+Mr. B-per
+Bush I-per
+said O
+the O
+prescription O
+drug O
+program O
+is O
+the O
+greatest O
+advance O
+in O
+health O
+care O
+for O
+U.S. O
 seniors O
 since O
 the O
@@ -1750,8 +1750,8 @@ reform O
 effort O
 led O
 by O
-President B-per
-Hugo I-per
+President O
+Hugo O
 Chavez O
 . O
 
@@ -1760,12 +1760,12 @@ rights O
 group O
 says O
 the O
-African O
-Union O
+African B-geo
+Union I-geo
 troops O
 now O
 in O
-Darfur O
+Darfur B-geo
 have O
 acted O
 with O
@@ -1783,7 +1783,7 @@ resources O
 
 Independence O
 from O
-Spain B-gpe
+Spain O
 was O
 declared O
 in O
@@ -1804,7 +1804,7 @@ town O
 official O
 told O
 the O
-French O
+French B-gpe
 news O
 agency O
 that O
@@ -1849,7 +1849,7 @@ opening O
 ceremony O
 will O
 represent O
-China B-geo
+China O
 's O
 culture O
 from O
@@ -1875,7 +1875,7 @@ says O
 the O
 clash O
 occurred O
-Friday O
+Friday B-tim
 in O
 the O
 western O
@@ -1899,7 +1899,7 @@ rebels O
 The O
 Warsaw O
 court O
-Tuesday B-tim
+Tuesday O
 found O
 Jerzy O
 Urban O
@@ -1930,12 +1930,12 @@ of O
 state O
 . O
 
-Finance I-per
-Minister I-per
+Finance O
+Minister O
 Rodrigo O
 Cabezas O
 said O
-Wednesday B-tim
+Wednesday O
 that O
 his O
 country O
@@ -1969,12 +1969,12 @@ killed O
 more O
 people O
 in O
-Indonesia O
+Indonesia B-geo
 than O
 any O
 other O
 country O
-since B-tim
+since O
 it O
 began O
 spreading O
@@ -1997,8 +1997,8 @@ since O
 the O
 end O
 of O
-World B-eve
-War I-eve
+World O
+War O
 II O
 . O
 
@@ -2006,7 +2006,7 @@ But O
 relations O
 have O
 improved O
-since B-tim
+since O
 the O
 two O
 countries O
@@ -2036,8 +2036,8 @@ private O
 networks O
 also O
 opposed O
-Mr. B-per
-Chavez I-per
+Mr. O
+Chavez O
 , O
 but O
 their O
@@ -2085,7 +2085,7 @@ the O
 pope O
 added O
 that O
-Europe O
+Europe B-geo
 's O
 Christian O
 heritage O
@@ -2102,9 +2102,9 @@ future O
 
 The O
 European B-org
-Union O
-and B-art
-the I-art
+Union I-org
+and O
+the O
 United B-geo
 States I-geo
 cut O
@@ -2147,11 +2147,11 @@ far O
 enough O
 . O
 
-Rights I-tim
+Rights O
 groups O
 criticize O
-China B-art
-for I-art
+China O
+for O
 selling O
 weapons O
 to O
@@ -2175,9 +2175,9 @@ President B-per
 Bush I-per
 said O
 Thursday B-tim
-Iran O
+Iran B-gpe
 and O
-Syria O
+Syria B-geo
 must O
 stop O
 helping O
@@ -2186,7 +2186,7 @@ and O
 commit O
 to O
 help O
-Iraq B-geo
+Iraq O
 's O
 fledgling O
 government O
