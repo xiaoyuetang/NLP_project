@@ -17,10 +17,15 @@ class Train():
         self.crf = CRF(train_path)
         self.sentence = None
 
-    def forward_algo(self, sentence):
-        tags = self.feature.tags.keys()
-        forward_dic = defaultdict()
+    def forward_algo(self, sentence, feature_dic, tags):
+        # tags = self.feature.tags.keys()
+        n = len(sentence)  # Number of words
+        d = len(tags)  # Number of states
+        forward_dic = np.zeros((n, d))
         score = 0
+        for i, tag in enumerate(tags):
+            transition_score = self.feature.get_feature_weight("START", tag, "transition")
+
         for i, tag in enumerate(tags):
             forward_dic[i] = {}
             forward_dic[i][0] = self.feature.get_feature_weight("START", tag, "transition") + \
@@ -30,10 +35,11 @@ class Train():
         for j, word in enumerate(sentence[1:]):
             j += 1
             for i, tag in enumerate(tags):
-                total_sum = sum([np.exp(self.feature.get_feature_weight(tag_, tag, "transition") +
-                                        self.feature.get_feature_weight(tag, word, "emission") +
-                                        forward_dic[k][j-1]) for k, tag_ in enumerate(tags)])
-                forward_dic[i][j] = np.log(total_sum)
+                for k, tag_ in enumerate(tags):
+                    total_sum = sum([np.exp(self.feature.get_feature_weight(tag_, tag, "transition") +
+                                            self.feature.get_feature_weight(tag, word, "emission") +
+                                            forward_dic[k][j-1])])
+                    forward_dic[i][j] = np.log(total_sum)
 
         for i, tag in enumerate(tags):
             score += np.exp(forward_dic[i][len(sentence)-1] + self.feature.get_feature_weight(tag, "END", "transition"))
@@ -174,8 +180,8 @@ if __name__ == '__main__':
     train = Train(train_path)
     sentence_list, tag_list = train.get_sentences_tags(train_path)
 
-    # print(len(sentence_list), len(tag_list))
-    out = train.loss_function(sentence_list, tag_list)
-    # print(out)
-    gradient = train.calculate_gradients(sentence_list, tag_list)
-    # print(gradient)
+    print(len(sentence_list), len(tag_list))
+    out = train.loss_function(sentence_list, tag_list, train.feature_dict)
+    print(out)
+    gradient = train.calculate_gradients(sentence_list, tag_list, train.feature_dict)
+    print(gradient)

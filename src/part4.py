@@ -5,62 +5,93 @@ from scipy.optimize import fmin_l_bfgs_b
 from part1 import Feature
 from part3 import Train
 
+def numpy_to_dict(w, f, reverse = False):
+    '''
+    Converts a numpy array w to a dictionary with keys from f.
+    '''
+    for i,k in enumerate(f.keys()):
+        f[k] = w[i]
+    return f
 
-class Learn():
-    def __init__(self):
-        self.feature = Feature(train_path)
-        self.feature_dict = self.feature.feature_dict
-        self.sentence_list, self.tag_list = train.get_sentences_tags(train_path)
-        self.lr = 0.1
-    def callbackF(self, w):
-        '''
-        This function will only be called by "fmin_l_bfgs_b"
-        Arg:
+
+def prepare_grad_for_bfgs(grads,f):
+    '''
+    Converts a dictionary to a numpy array.
+    '''
+    np_grads = np.zeros(len(f))
+    for i,k in enumerate(f.keys()):
+        np_grads[i] = grads[k]
+    return np_grads
+
+
+def callbackF(w):
+    '''
+    This function will be called by "fmin_l_bfgs_b"
+    Arg:
         w: weights, numpy array
-        '''
-        print("in callbackf")
-        loss = self.get_loss_grad(w)[0]
-        print('Loss:{0:.4f}'.format(loss))
+    '''
+    loss = compute_crf_loss(train_inputs,train_labels,f,states,0.1,regularization=True)
+    print('Loss:{0:.4f}'.format(loss))
 
-    def get_loss_grad(self, w):
-        '''
-        This function will only be called by "fmin_l_bfgs_b"
-        Arg:
-            w: weights, numpy array
-        Returns:
-            loss: loss, float
-            grads: gradients, numpy array
-        '''
-        # to be completed by you,
-        # based on the modified loss and gradients,
-        # with L2 regularization included
-        print("calculate gradient")
-        # gradient_dic = train.calculate_gradients(self.sentence_list, self.tag_list)
-        # grads = np.zeros_like(w)
-        # for i, k in enumerate(self.feature_dict.keys()):
-        #     grads[i] = gradient_dic[k]
+def get_loss_grad(w,*args):
+    '''
+    This function will be called by "fmin_l_bfgs_b"
+    Arg:
+        w: weights, numpy array
+    Returns:
+        loss: loss, float
+        grads: gradients, numpy array
+    '''
 
-        for i, k in enumerate(self.feature_dict.keys()):
-            self.feature_dict[k] = w[i]
-        grad_dic = train.calculate_gradients(self.sentence_list, self.tag_list, self.feature_dict, lr=0.1, reg=True)
-        grads = np.zeros_like(w)
-        for i, k in enumerate(self.feature_dict.keys()):
-            grads[i] = grad_dic[k]
-        print("***gradients: ", grads)
-
-        loss = train.loss_function(self.sentence_list, self.tag_list, self.feature_dict, lr=0.1, reg=True)
-        print("***loss: ", loss)
-
-        return loss, grads
+    train_inputs,train_labels,f,states = args
+    f = numpy_to_dict(w,f)
+    # compute loss and grad
+    loss = train.loss_function(train_inputs, train_labels, f, 0.1, reg=True)
+    grads = train.calculate_gradients(train_inputs, train_labels, f, 0.1, reg=True)
+    grads = prepare_grad_for_bfgs(grads, f)
+    # return loss and grad
+    return loss, grads
 
 
 if __name__ == '__main__':
     dataset = os.path.join(os.path.dirname(__file__), "..", "data", "partial")
     train_path = os.path.join(dataset, "train")
     train = Train(train_path)
-    learn = Learn()
-    init_w = np.zeros(len(learn.feature_dict))
-    # result = fmin_l_bfgs_b(learn.get_loss_grad, init_w, args=(sentence_list, tag_list, lr), pgtol=0.01, callback=learn.callbackF(init_w, sentence_list, tag_list, lr))
-    # result = fmin_l_bfgs_b(learn.get_loss_grad(init_w, sentence_list, tag_list, lr=0.1), init_w, pgtol=0.01, callback=learn.callbackF(init_w, sentence_list, tag_list, lr=0.1))
-    result = fmin_l_bfgs_b(learn.get_loss_grad, init_w, pgtol=0.01, callback=learn.callbackF)
-    print(result)
+    sentence_list, tag_list = train.get_sentences_tags(train_path)
+    feature = Feature(train_path)
+    init_w = np.zeros(len(feature.feature_dict))
+    result = fmin_l_bfgs_b(get_loss_grad, init_w, args=(sentence_list, tag_list, feature.feature_dict, feature.tags), pgtol=0.01, callback=callbackF)
+
+
+
+# def callbackF(w):
+#     '''
+#     This function will only be called by "fmin_l_bfgs_b"
+#     Arg:
+#     w: weights, numpy array
+#     '''
+#
+#     loss = get_loss_grad(w)[0]
+#     print('Loss:{0:.4f}'.format(loss))
+#
+#
+# def get_loss_grad(w, *args):
+#     '''
+#     This function will only be called by "fmin_l_bfgs_b"
+#     Arg:
+#     w: weights, numpy array
+#     Returns:
+#     6
+#     loss: loss, float
+#     grads: gradients, numpy array
+#     '''
+#     # convert np array to dict
+#     sentence_list, tag_list, feature_dic = args
+#     for i, k in enumerate(feature_dic.keys()):
+#         feature_dic[k] = w[i]
+#
+#     return loss, grads
+#
+# result = fmin_l_bfgs_b(get_loss_grad, init_w, pgtol=0.01, callback=callbackF)
+
+

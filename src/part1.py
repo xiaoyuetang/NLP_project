@@ -24,16 +24,6 @@ class Feature():
         emission_prbability = {}
         for tag in self.label_words:
             emission_prbability[tag] = {}
-            # self.label_words[tag]['#UNK#'] = 0
-            # for word in list(self.label_words[tag]):
-            #     if word not in self.words:
-            #         self.label_words[tag]['#UNK#'] += self.label_words[tag].pop(word)
-            #     elif self.words[word] < 1:
-            #         self.label_words[tag]['#UNK#'] += self.label_words[tag].pop(word)
-            #         del self.words[word]
-            #     else:
-            #         emission_prbability[tag][word] = self.label_words[tag][word] / self.tags[tag]
-            # emission_prbability[tag]['#UNK#'] = self.label_words[tag]['#UNK#'] / self.tags[tag]
             for word in list(self.label_words[tag]):
                 emission_prbability[tag][word] = self.label_words[tag][word] / self.tags[tag]
         return emission_prbability
@@ -90,7 +80,7 @@ class Feature():
         return feature_dic
 
     def get_feature_weight(self, tag, word, type):
-        return self.feature_dict.get("{}:{}+{}".format(type, tag, word), 0)
+        return self.feature_dict.get("{}:{}+{}".format(type, tag, word), -10**8)
 
     def data_processing(self):
         tags = {}
