@@ -41,7 +41,7 @@ class Train():
 
         return score, forward_dic
 
-    def loss_function(self, sentences, tags):
+    def loss_function(self, sentences, tags, feature_dict, lr=0.1, reg=False):
         out = 0
         # term1 = self.crf.get_score()
         # term2_sum = 0
@@ -52,6 +52,12 @@ class Train():
             out += term1-term2
             # print(term2)
             # term2_sum += term2
+        if reg:
+            reg_loss = 0
+            for feature in feature_dict:
+                reg_loss += feature_dict[feature] ** 2
+            out += lr * reg_loss
+
         return -out
 
     def backward_algo(self, sentence):
@@ -121,7 +127,7 @@ class Train():
             counts["transition:{}+{}".format(tag, tag_1)] += 1
         return counts
 
-    def calculate_gradients(self, x, y):
+    def calculate_gradients(self, x, y, feature_dict, lr=0.1, reg=False):
         gradient_dic = defaultdict(float)
 
         for i, sentence in enumerate(x):
@@ -135,38 +141,41 @@ class Train():
 
             for key, value in pair_counts.items():
                 gradient_dic[key] -= value
+        if reg:
+            for key, value in feature_dict.items():
+                gradient_dic[key] += 2 * lr * feature_dict[key]
+            # print(feature_dict)
         # return None
         return gradient_dic
 
 
-def get_sentences_tags(train_path):
-    with open(train_path) as file:
-        sentence_list = []
-        words = []
-        tag_list = []
-        tags = []
-        for line in file:
-            if line == "\n":
-                sentence_list.append(words)
-                tag_list.append(tags)
-                words = []
-                tags = []
-            else:
-                word, tag = line.split()
-                words.append(word.strip())
-                tags.append(tag.strip())
-    return sentence_list, tag_list
+    def get_sentences_tags(self, train_path):
+        with open(train_path) as file:
+            sentence_list = []
+            words = []
+            tag_list = []
+            tags = []
+            for line in file:
+                if line == "\n":
+                    sentence_list.append(words)
+                    tag_list.append(tags)
+                    words = []
+                    tags = []
+                else:
+                    word, tag = line.split()
+                    words.append(word.strip())
+                    tags.append(tag.strip())
+        return sentence_list, tag_list
 
 
 if __name__ == '__main__':
     dataset = os.path.join(os.path.dirname(__file__), "..", "data", "partial")
     train_path = os.path.join(dataset, "train")
     train = Train(train_path)
-
-    sentence_list, tag_list = get_sentences_tags(train_path)
+    sentence_list, tag_list = train.get_sentences_tags(train_path)
 
     # print(len(sentence_list), len(tag_list))
-    # out = train.loss_function(sentence_list, tag_list)
+    out = train.loss_function(sentence_list, tag_list)
     # print(out)
     gradient = train.calculate_gradients(sentence_list, tag_list)
-    print(gradient)
+    # print(gradient)
