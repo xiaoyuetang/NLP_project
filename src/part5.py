@@ -222,6 +222,9 @@ class posCRF(CRF):
                             * self.combined_parameter[(transTag, sequence[k].split(" ")[0])][label]
                     except:
                         score = pi[k-1][transTag][0] * self.transition_parameter[transTag][label] * 0.1e-8
+
+
+
                     piList.append([score, transTag])
                 piList.sort(reverse=True)
                 pi[k][label]=piList[0]
@@ -275,6 +278,11 @@ class posCRF(CRF):
         emission = emission_pos*emission_word
 
         return emission
+
+
+class StructuredPerceptron():
+    def __init__(self):
+        self.objective_function = None
 
 
 if __name__ == "__main__":
