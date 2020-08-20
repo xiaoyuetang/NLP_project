@@ -403,21 +403,21 @@ if __name__ == "__main__":
     dataset_full = os.path.join(os.path.dirname( __file__ ),"..", "data", "full")
     dataset_partial = os.path.join(os.path.dirname( __file__ ),"..", "data", "partial")
 
-    # pos_feature = posFeature(os.path.join(dataset_full, "train"), os.path.join(dataset_partial, "train"))
-    # feature_dict_combined = pos_feature.feature_dict_combined
-    # feature_dict = pos_feature.feature_dict
-    # n_items = take(5, feature_dict.items())
-    # pprint(n_items)
-    # print("Number of features: ", len(feature_dict.items()))
-    #
-    # pos_crf = posCRF(os.path.join(dataset_full, "train"), os.path.join(dataset_partial, "train"))
-    # input_path = os.path.join(dataset_full, "dev.in")
-    # output_path = os.path.join(dataset_full, "dev.p5.CRF.f3.out")
-    # pos_crf.inference_pos(input_path, output_path)
-    #
-    # input_path_combine = os.path.join(dataset_full, "dev.in")
-    # output_path_combine = os.path.join(dataset_full, "dev.p5.CRF.f4.out")
-    # pos_crf.inference_pos(input_path_combine, output_path_combine, combine=True)
+    pos_feature = posFeature(os.path.join(dataset_full, "train"), os.path.join(dataset_partial, "train"))
+    feature_dict_combined = pos_feature.feature_dict_combined
+    feature_dict = pos_feature.feature_dict
+    n_items = take(5, feature_dict.items())
+    pprint(n_items)
+    print("Number of features: ", len(feature_dict.items()))
+
+    pos_crf = posCRF(os.path.join(dataset_full, "train"), os.path.join(dataset_partial, "train"))
+    input_path = os.path.join(dataset_full, "dev.in")
+    output_path = os.path.join(dataset_full, "dev.p5.CRF.f3.out")
+    pos_crf.inference_pos(input_path, output_path)
+
+    input_path_combine = os.path.join(dataset_full, "dev.in")
+    output_path_combine = os.path.join(dataset_full, "dev.p5.CRF.f4.out")
+    pos_crf.inference_pos(input_path_combine, output_path_combine, combine=True)
 
     sp = StructuredPerceptron(os.path.join(dataset_full, "train"), os.path.join(dataset_partial, "train"))
     input_path_sp = os.path.join(dataset_full, "dev.in")
