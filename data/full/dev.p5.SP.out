@@ -561,8 +561,8 @@ on IN O
 
 Supporters NNS O
 of IN O
-Judge NNP B-org
-Iftikhar NNP I-org
+Judge NNP I-per
+Iftikhar NNP O
 Mohammed NNP B-per
 Chaudhry NNP I-per
 chanted VBD O

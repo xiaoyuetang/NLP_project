@@ -14,7 +14,7 @@ wanted O
 list O
 of O
 suspected O
-al-Qaida O
+al-Qaida B-org
 sympathizers O
 issued O
 by O
@@ -43,11 +43,11 @@ than O
 the O
 much O
 larger O
-U.S. O
+U.S. B-geo
 force O
 fighting O
-Sunni O
-Arab O
+Sunni B-org
+Arab I-org
 insurgents O
 and O
 foreign O
@@ -56,7 +56,7 @@ in O
 the O
 rest O
 of O
-Iraq O
+Iraq B-geo
 . O
 
 The O
@@ -76,8 +76,8 @@ the O
 north O
 contributed O
 to O
-two O
-decades O
+two B-tim
+decades I-tim
 of O
 hostility O
 between O
@@ -94,9 +94,9 @@ new O
 international O
 sanctions O
 against O
-Sudan O
+Sudan B-geo
 , O
-Sudanese O
+Sudanese B-gpe
 rebels O
 and O
 people O
@@ -107,7 +107,7 @@ peace O
 in O
 the O
 war-torn O
-Darfur O
+Darfur B-geo
 region O
 . O
 
@@ -122,8 +122,8 @@ in O
 insurgent O
 attacks O
 before O
-January O
-30 O
+January B-tim
+30 I-tim
 elections O
 . O
 
@@ -251,7 +251,7 @@ among O
 the O
 dead O
 from O
-Friday O
+Friday B-tim
 's O
 blast O
 in O
@@ -269,7 +269,7 @@ polio O
 immunization O
 campaign O
 on O
-Wednesday O
+Wednesday B-tim
 with O
 over O
 1,00,000 O
@@ -298,7 +298,7 @@ Camara O
 seized O
 power O
 in O
-December O
+December B-tim
 just O
 hours O
 after O
@@ -306,7 +306,7 @@ the O
 death O
 of O
 longtime O
-dictator O
+dictator B-tim
 Lansana O
 Conte O
 . O
@@ -316,7 +316,7 @@ defended O
 its O
 business O
 in O
-Burma O
+Burma B-geo
 , O
 saying O
 companies O
@@ -335,18 +335,18 @@ ethical O
 . O
 
 Mr. B-per
-Nowak O
+Nowak I-per
 's O
 visit O
 to O
-China O
+China B-geo
 included O
 stops O
 in O
-Tibet O
+Tibet B-geo
 and O
 the O
-Muslim-majority O
+Muslim-majority B-org
 region O
 of O
 Xinjiang O
@@ -412,7 +412,7 @@ deal O
 as O
 of O
 mid O
-April O
+April B-tim
 . O
 
 A O
@@ -421,14 +421,14 @@ of O
 explosions O
 shook O
 the O
-Iraqi O
+Iraqi B-gpe
 capital O
-Wednesday O
+Wednesday B-tim
 , O
 while O
 a O
 high-ranking O
-U.S. O
+U.S. B-geo
 official O
 visited O
 the O
@@ -461,8 +461,8 @@ and O
 better O
 than O
 the O
-prior O
-quarter O
+prior B-tim
+quarter I-tim
 . O
 
 She O
@@ -470,14 +470,14 @@ withdrew O
 from O
 politics O
 in O
-2001 O
+2001 B-tim
 . O
 
 The O
 men O
 disappeared O
 on O
-Thursday O
+Thursday B-tim
 while O
 traveling O
 to O
@@ -485,10 +485,10 @@ a O
 military O
 base O
 in O
-South O
-Waziristan O
+South B-geo
+Waziristan I-geo
 in O
-Pakistan O
+Pakistan B-geo
 's O
 northwestern O
 tribal O
@@ -542,19 +542,19 @@ confirmed O
 The O
 interview O
 airs O
-August O
-2 O
-and O
-3 O
+August B-tim
+2 I-tim
+and I-tim
+3 I-tim
 on O
 Good O
 Morning O
-America O
+America B-org
 , O
 and O
 later O
-August O
-3 O
+August B-tim
+3 I-tim
 on O
 20/20 O
 . O
@@ -562,20 +562,20 @@ on O
 Supporters O
 of O
 Judge O
-Iftikhar O
-Mohammed O
+Iftikhar B-geo
+Mohammed I-geo
 Chaudhry O
 chanted O
 slogans O
-Saturday O
+Saturday B-tim
 demanding O
 the O
 resignation O
 of O
-Pakistani O
-President O
-Pervez O
-Musharraf O
+Pakistani B-gpe
+President B-per
+Pervez I-per
+Musharraf I-per
 . O
 
 On O
@@ -599,7 +599,7 @@ reported O
 to O
 be O
 quiet O
-Saturday O
+Saturday B-tim
 , O
 with O
 Australian O
@@ -633,14 +633,14 @@ festival O
 Tibetan B-gpe
 exiles O
 in O
-India O
+India B-geo
 fasted O
 and O
 prayed O
 for O
 peace O
 on O
-Saturday O
+Saturday B-tim
 , O
 and O
 their O
@@ -648,8 +648,8 @@ spiritual O
 leader O
 , O
 the O
-Dalai O
-Lama O
+Dalai B-geo
+Lama I-geo
 , O
 joined O
 in O
@@ -709,7 +709,7 @@ leftist O
 " O
 
 Next O
-Wednesday O
+Wednesday B-tim
 's O
 start O
 for O
@@ -721,30 +721,30 @@ just O
 ahead O
 of O
 the O
-Asia-Pacific O
-Economic O
-Cooperation O
+Asia-Pacific B-org
+Economic I-org
+Cooperation I-org
 forum O
-November O
-18 O
+November B-tim
+18 I-tim
 and O
 19 O
 in O
-Busan O
+Busan B-geo
 , O
-South O
-Korea O
+South B-geo
+Korea I-geo
 . O
 
 Irate O
 fans O
 burned O
 the O
-Hollywood O
+Hollywood B-geo
 actor O
 in O
 effigy O
-April O
+April B-tim
 16 O
 , O
 after O
@@ -761,8 +761,8 @@ AIDS O
 awareness O
 event O
 in O
-New O
-Delhi O
+New B-geo
+Delhi I-geo
 . O
 
 In O
@@ -781,8 +781,8 @@ This O
 Week O
 program O
 , O
-Mr. O
-Powell O
+Mr. B-per
+Powell I-per
 says O
 there O
 was O
@@ -810,10 +810,10 @@ the O
 aftermath O
 of O
 the O
-September O
-11 O
-, O
-2001 O
+September B-tim
+11 I-tim
+, I-tim
+2001 I-tim
 terrorist O
 attacks O
 . O
@@ -827,7 +827,7 @@ Afghanistan B-geo
 has O
 killed O
 nine O
-Afghan O
+Afghan B-gpe
 soldiers O
 . O
 
@@ -839,25 +839,25 @@ State I-org
 Daniel O
 Fried O
 and O
-Special O
+Special B-art
 Assistant O
 to O
 the O
-President O
-Thomas O
+President B-per
+Thomas I-per
 Graham O
 answered O
 questions O
-Wednesday O
+Wednesday B-tim
 on O
 the O
-White O
-House O
+White B-org
+House I-org
 interactive O
 website O
 about O
-President O
-Bush O
+President B-per
+Bush I-per
 's O
 VE O
 day O
@@ -866,9 +866,9 @@ to O
 the O
 Netherlands O
 , O
-Russia O
+Russia B-geo
 and O
-Georgia O
+Georgia B-geo
 . O
 
 Thursday B-tim
@@ -940,17 +940,17 @@ xenophobia O
 
 Back O
 in O
-May O
+May B-tim
 , O
 a O
-Nepalese O
+Nepalese B-gpe
 Sherpa O
 climbed O
 Everest O
 for O
 a O
 record O
-19th O
+19th B-tim
 time O
 . O
 
@@ -966,7 +966,7 @@ country O
 will O
 emerge O
 in O
-Iraq O
+Iraq B-geo
 , O
 proving O
 the O
@@ -1004,7 +1004,7 @@ three O
 non-permanent O
 seats O
 for O
-African O
+African B-gpe
 countries O
 . O
 
@@ -1066,7 +1066,7 @@ a O
 candidate O
 for O
 eventual O
-EU O
+EU B-org
 accession O
 . O
 
@@ -1085,8 +1085,8 @@ incident O
 and O
 are O
 now O
-giving O
-Obama O
+giving B-per
+Obama I-per
 24-hour O
 protection O
 . O
@@ -1134,10 +1134,10 @@ is O
 a O
 stronghold O
 of O
-Afghanistan O
+Afghanistan B-geo
 's O
 former O
-Taleban O
+Taleban B-org
 rulers O
 . O
 
@@ -1151,7 +1151,7 @@ Friday B-tim
 , O
 Ambassador O
 Tony B-per
-Garza O
+Garza I-per
 said O
 the O
 consulate O
@@ -1162,7 +1162,7 @@ one O
 week O
 , O
 beginning O
-August O
+August B-tim
 1 O
 . O
 
@@ -1228,7 +1228,7 @@ to O
 Ivo O
 Karlovic O
 of O
-Croatia O
+Croatia B-geo
 , O
 06-Mar O
 , O
@@ -1297,7 +1297,7 @@ $ O
 200 O
 million O
 ( O
-US O
+US B-org
 ) O
 . O
 
@@ -1306,7 +1306,7 @@ of O
 the O
 passengers O
 , O
-French O
+French B-gpe
 Foreign O
 Trade O
 Minister O
@@ -1321,9 +1321,9 @@ day O
 for O
 cooperation O
 between O
-France O
+France B-geo
 and O
-Iraq O
+Iraq B-geo
 . O
 
 The O
@@ -1353,8 +1353,8 @@ Jewish O
 forces O
 from O
 the O
-Middle O
-East O
+Middle B-geo
+East I-geo
 will O
 not O
 be O
@@ -1378,8 +1378,8 @@ city O
 of O
 Omdurman O
 on O
-May O
-10 O
+May B-tim
+10 I-tim
 after O
 traveling O
 across O
@@ -1443,7 +1443,7 @@ truck O
 traveling O
 in O
 southern O
-Afghanistan O
+Afghanistan B-geo
 . O
 
 He O
@@ -1468,7 +1468,7 @@ denied O
 the O
 reports O
 in O
-Peru O
+Peru B-geo
 's O
 El~Commercio O
 newspaper O
@@ -1486,14 +1486,14 @@ recent O
 weeks O
 , O
 4,000 O
-U.S. O
-Marines O
+U.S. B-org
+Marines I-org
 , O
 along O
 with O
-British O
+British B-gpe
 and O
-Afghan O
+Afghan B-gpe
 troops O
 , O
 have O
@@ -1503,10 +1503,10 @@ major O
 offensive O
 in O
 southern O
-Afghanistan O
+Afghanistan B-geo
 , O
 targeting O
-Taliban O
+Taliban B-org
 insurgents O
 in O
 their O
@@ -1526,8 +1526,8 @@ hear O
 Western O
 arguments O
 on O
-February O
-2 O
+February B-tim
+2 I-tim
 . O
 
 Hamas B-org
@@ -1552,22 +1552,22 @@ Football O
 League O
 playoffs O
 continue O
-Saturday O
+Saturday B-tim
 when O
 the O
 Pittsburgh O
 Steelers O
 host O
 the O
-New O
-York O
+New B-geo
+York I-geo
 Jets O
 and O
 Atlanta O
 takes O
 on O
-Saint O
-Louis O
+Saint B-per
+Louis I-per
 . O
 
 The O
@@ -1625,7 +1625,7 @@ citizens O
 Maduro O
 rejected O
 a O
-U.S. O
+U.S. B-geo
 apology O
 for O
 the O
@@ -1658,7 +1658,7 @@ and O
 the O
 role O
 of O
-Islam O
+Islam B-per
 . O
 
 French B-gpe
@@ -1691,7 +1691,7 @@ on O
 the O
 issue O
 in O
-Washington O
+Washington B-geo
 . O
 
 In O
@@ -1717,7 +1717,7 @@ in O
 health O
 care O
 for O
-U.S. O
+U.S. B-geo
 seniors O
 since O
 the O
@@ -1750,9 +1750,9 @@ reform O
 effort O
 led O
 by O
-President O
-Hugo O
-Chavez O
+President B-per
+Hugo I-per
+Chavez I-per
 . O
 
 The O
@@ -1783,7 +1783,7 @@ resources O
 
 Independence O
 from O
-Spain O
+Spain B-geo
 was O
 declared O
 in O
@@ -1849,7 +1849,7 @@ opening O
 ceremony O
 will O
 represent O
-China O
+China B-geo
 's O
 culture O
 from O
@@ -1899,7 +1899,7 @@ rebels O
 The O
 Warsaw O
 court O
-Tuesday O
+Tuesday B-tim
 found O
 Jerzy O
 Urban O
@@ -1909,7 +1909,7 @@ was O
 a O
 spokesman O
 for O
-Poland O
+Poland B-gpe
 's O
 former O
 communist O
@@ -1935,7 +1935,7 @@ Minister O
 Rodrigo O
 Cabezas O
 said O
-Wednesday O
+Wednesday B-tim
 that O
 his O
 country O
@@ -1979,11 +1979,11 @@ it O
 began O
 spreading O
 in O
-Southeast O
-Asia O
+Southeast B-geo
+Asia I-geo
 in O
 late O
-2003 O
+2003 B-tim
 . O
 
 He O
@@ -1997,9 +1997,9 @@ since O
 the O
 end O
 of O
-World O
-War O
-II O
+World B-org
+War B-per
+II I-per
 . O
 
 But O
@@ -2017,7 +2017,7 @@ moving O
 peace O
 process O
 in O
-2004 O
+2004 B-tim
 to O
 resolve O
 their O
@@ -2036,8 +2036,8 @@ private O
 networks O
 also O
 opposed O
-Mr. O
-Chavez O
+Mr. B-per
+Chavez I-per
 , O
 but O
 their O
@@ -2094,8 +2094,8 @@ a O
 fundamental O
 part O
 of O
-the O
-Union O
+the B-geo
+Union I-geo
 's O
 future O
 . O
@@ -2119,13 +2119,13 @@ it O
 refuses O
 to O
 recognize O
-Israel O
+Israel B-geo
 , O
 renounce O
 violence O
 and O
 accept O
-past O
+past B-tim
 peace O
 accords O
 . O
@@ -2150,12 +2150,12 @@ enough O
 Rights O
 groups O
 criticize O
-China O
+China B-geo
 for O
 selling O
 weapons O
 to O
-Sudan O
+Sudan B-geo
 's O
 government O
 which O
@@ -2168,7 +2168,7 @@ used O
 against O
 rebels O
 in O
-Darfur O
+Darfur B-geo
 . O
 
 President B-per
@@ -2186,7 +2186,7 @@ and O
 commit O
 to O
 help O
-Iraq O
+Iraq B-geo
 's O
 fledgling O
 government O

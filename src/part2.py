@@ -77,7 +77,7 @@ class CRF():
         # Initialization  stage
         for label in tags :
             if label not in self.transition_parameter['START']: continue
-            emission = self.get_estimate(sequence, label)
+            emission = self.get_estimate(sequence, label, 0)
 
             pi[0][label] = [self.transition_parameter['START'][label] * emission]
 
@@ -91,13 +91,7 @@ class CRF():
                 piList.sort(reverse=True)
                 pi[k][label]=piList[0]
 
-                if sequence[k] in self.train_set:
-                    if sequence[k] in self.emission_parameter[label]:
-                        emission = self.emission_parameter[label][sequence[k]]
-                    else:
-                        emission = 0.1e-8
-                else:
-                    emission = self.emission_parameter[label]['#UNK#']
+                emission = self.get_estimate(sequence, label, k)
                 pi[k][label][0] *= emission
 
         # Finally
@@ -121,18 +115,19 @@ class CRF():
 
         return prediction
 
-    def get_estimate(self, sequence, label):
+    def get_estimate(self, sequence, label, k):
         '''
         function to deal with unseen data.
         '''
-        k = 0
         if sequence[k] in self.train_set:
             if sequence[k] in self.emission_parameter[label]:
                 emission = self.emission_parameter[label][sequence[k]]
             else:
                 emission = 0.1e-8
         else:
-            emission = self.emission_parameter[label]['#UNK#']
+            # emission = self.emission_parameter[label]['#UNK#']
+            emission = 0.1e-8
+
         return emission
 
 

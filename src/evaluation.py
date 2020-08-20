@@ -35,6 +35,11 @@ def eval(pred_path, gold_path, out_path):
 if __name__ == "__main__":
     dataset_full = os.path.join(os.path.dirname( __file__ ),"..", "data", "full")
     dataset_partial = os.path.join(os.path.dirname( __file__ ),"..", "data", "partial")
+    print("PART II")
     eval(dataset_partial+'/dev.p2.out', dataset_partial+'/dev.out', dataset_partial+'/eval.p2.out')
+    print("PART V (i)")
     eval(dataset_full+'/dev.p5.CRF.f3.out', dataset_full+'/dev.out', dataset_full+'/eval.p5.CRF.f3.out')
+    print("PART V (ii)")
     eval(dataset_full+'/dev.p5.CRF.f4.out', dataset_full+'/dev.out', dataset_full+'/eval.p5.CRF.f4.out')
+    print("PART V (iii)")
+    eval(dataset_full+'/dev.p5.SP.out', dataset_full+'/dev.out', dataset_full+'/eval.p5.SP.out')

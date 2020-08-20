@@ -154,7 +154,7 @@ class posCRF(CRF):
         # Initialization  stage
         for label in tags :
             if label not in self.transition_parameter['START']: continue
-            emission = self.get_estimate(sequence, label)
+            emission = self.get_estimate(sequence, label, 0)
 
             pi[0][label] = [self.transition_parameter['START'][label] * emission]
 
@@ -168,24 +168,7 @@ class posCRF(CRF):
                 piList.sort(reverse=True)
                 pi[k][label]=piList[0]
 
-                if sequence[k].split(" ")[0] in self.train_set:
-                    if sequence[k].split(" ")[0] in self.emission_parameter[label]:
-                        emission_word = self.emission_parameter[label][sequence[k].split(" ")[0]]
-                    else:
-                        emission_word  = 0.1e-8
-                else:
-                    emission_word = self.emission_parameter[label]['#UNK#']
-
-                if sequence[k].split(" ")[1] in self.train_set:
-                    if sequence[k].split(" ")[1] in self.emission_parameter[label]:
-                        emission_pos = self.emission_parameter[label][sequence[k].split(" ")[1]]
-                    else:
-                        emission_pos = 0.1e-8
-                else:
-                    emission_pos = self.emission_parameter[label]['#UNK#']
-
-                emission = emission_pos*emission_word
-
+                emission = self.get_estimate(sequence, label, k)
                 pi[k][label][0] *= emission
 
         # Finally
@@ -221,7 +204,7 @@ class posCRF(CRF):
         # Initialization  stage
         for label in tags :
             if label not in self.transition_parameter['START']: continue
-            emission = self.get_estimate(sequence, label)
+            emission = self.get_estimate(sequence, label, 0)
 
             try:
                 pi[0][label] = [self.transition_parameter['START'][label] * emission \
@@ -239,28 +222,14 @@ class posCRF(CRF):
                             * self.combined_parameter[(transTag, sequence[k].split(" ")[0])][label]
                     except:
                         score = pi[k-1][transTag][0] * self.transition_parameter[transTag][label] * 0.1e-8
+
+
+
                     piList.append([score, transTag])
                 piList.sort(reverse=True)
-                pi[k][label]=piList[0]
+                pi[k][label] = piList[0]
 
-                if sequence[k].split(" ")[0] in self.train_set:
-                    if sequence[k].split(" ")[0] in self.emission_parameter[label]:
-                        emission_word = self.emission_parameter[label][sequence[k].split(" ")[0]]
-                    else:
-                        emission_word  = 0.1e-8
-                else:
-                    emission_word = self.emission_parameter[label]['#UNK#']
-
-                if sequence[k].split(" ")[1] in self.train_set:
-                    if sequence[k].split(" ")[1] in self.emission_parameter[label]:
-                        emission_pos = self.emission_parameter[label][sequence[k].split(" ")[1]]
-                    else:
-                        emission_pos = 0.1e-8
-                else:
-                    emission_pos = self.emission_parameter[label]['#UNK#']
-
-                emission = emission_pos*emission_word
-
+                emission = self.get_estimate(sequence, label, k)
                 pi[k][label][0] *= emission
 
         # Finally
@@ -284,29 +253,156 @@ class posCRF(CRF):
 
         return prediction
 
-    def get_estimate(self, sequence, label):
+    def get_estimate(self, sequence, label, k):
         '''
         function to deal with unseen data.
         '''
-        k = 0
         if sequence[k].split(" ")[0] in self.train_set:
             if sequence[k].split(" ")[0] in self.emission_parameter[label]:
-                emission = self.emission_parameter[label][sequence[k].split(" ")[0]]
+                emission_word = self.emission_parameter[label][sequence[k].split(" ")[0]]
             else:
-                emission = 0.1e-8
-        elif sequence[k].split(" ")[1] in self.train_set:
-            if sequence[k].split(" ")[1] in self.emission_parameter[label]:
-                emission = self.emission_parameter[label][sequence[k].split(" ")[1]]
-            else:
-                emission = 0.1e-8
+                emission_word  = 0.1e-8
         else:
-            emission = self.emission_parameter[label]['#UNK#']
+            # emission_word = self.emission_parameter[label]['#UNK#']
+            emission_word  = 0.1e-8
+
+        if sequence[k].split(" ")[1] in self.train_set:
+            if sequence[k].split(" ")[1] in self.emission_parameter[label]:
+                emission_pos = self.emission_parameter[label][sequence[k].split(" ")[1]]
+            else:
+                emission_pos = 0.1e-8
+        else:
+            # emission_pos = self.emission_parameter[label]['#UNK#']
+            emission_pos = 0.1e-8
+
+        emission = emission_pos*emission_word
+
         return emission
+
+
+class StructuredPerceptron():
+    def __init__(self, path_train_full, path_train_partial):
+        self.path_train_full = path_train_full
+        self.path_train_partial = path_train_partial
+        self.crf = CRF(path_train_partial)
+        self.pos_crf = posCRF(path_train_full, path_train_partial)
+        self.learning_rate = 0.1e-5
+        self.epoch_num = 2
+
+    def inference(self, test_in, test_out, type):
+        '''
+        an inference to use structured percepstron.
+        '''
+        for epo in range(self.epoch_num):
+            print(f"Epoch: {epo+1}\n\n")
+            self.epoch(type)
+
+        if type == "HMM":
+            self.crf.inference(test_in, test_out)
+        elif type == "COMBINE":
+            self.pos_crf.inference_pos(test_in, test_out, combine=True)
+        else: #"POS"
+            self.pos_crf.inference_pos(test_in, test_out)
+
+    def set_lr(self, lr):
+        self.learning_rate = lr
+
+    def set_epoch_num(self, en):
+        self.epoch_num = en
+
+    def epoch(self, type):
+        '''
+        predict tags in a sentence level then update the parameters.
+        '''
+
+        word_sequence = []
+        pos_sequence = []
+        tag_sequence = []
+        train_sequence = []
+
+        input_path = self.path_train_full if type != "HMM" else self.path_train_partial
+
+        for line in open(input_path, encoding='utf-8', mode='r'):
+            check = line.rstrip()
+            splited_line = line.split(" ")
+            word = splited_line[0]
+            tag = splited_line[-1].replace("\n","")
+            pos = splited_line[1] if len(splited_line)>2 else None
+            if check:
+                word_sequence.append(word)
+                pos_sequence.append(pos)
+                tag_sequence.append(tag)
+                train_sequence.append(f"{word} {pos}")
+            else:
+
+                if type == "HMM":
+                    prediction_sequence = self.crf.viterbi(word_sequence)
+                elif type == "COMBINE":
+                    prediction_sequence = self.pos_crf.viterbi_combine(train_sequence)
+                else: #"POS"
+                    prediction_sequence = self.pos_crf.viterbi_pos(train_sequence)
+
+                pred_tag_sequence = []
+                for i in range(len(word_sequence)):
+                    if prediction_sequence:
+                        pred_tag = prediction_sequence[i]
+                    else:
+                        pred_tag = "O"
+                    pred_tag_sequence.append(pred_tag)
+
+                self.update(word_sequence, pos_sequence, tag_sequence, pred_tag_sequence, type)
+
+                word_sequence = []
+                pos_sequence = []
+                tag_sequence = []
+                train_sequence = []
+
+    def update(self, word_sequence, pos_sequence, tag_sequence, pred_tag_sequence, type):
+        '''
+        update parameters in a sentence level.
+        '''
+        def _update(para, lr, *args):
+            if len(args) > 2:
+                try:
+                    para[(args[0], args[1])][args[2]] += lr
+                except:
+                    para[(args[0], args[1])][args[2]] = 0.1e-8
+            else:
+                try:
+                    para[args[0]][args[1]] += lr
+                except:
+                    para[args[0]][args[1]] = 0.1e-8
+
+        for idx, word in enumerate(word_sequence):
+            prev_tag = tag_sequence[idx-1] if idx != 0 else 'START'
+            pos = pos_sequence[idx]
+            true_tag = tag_sequence[idx]
+            pred_tag = pred_tag_sequence[idx]
+
+            if true_tag != pred_tag:
+                lr = self.learning_rate
+            else:
+                lr = -self.learning_rate
+
+            if type == "HMM":
+                _update(self.crf.emission_parameter, lr*0.1e-3, pred_tag, word)
+                _update(self.crf.transition_parameter, lr, prev_tag, pred_tag)
+            elif type == "COMBINE":
+                for item in [pos, word]:
+                    _update(self.pos_crf.emission_parameter, lr*0.1e-3, pred_tag, item)
+                    _update(self.pos_crf.combined_parameter, lr*0.1e-3, prev_tag, item, pred_tag)
+                _update(self.pos_crf.transition_parameter, lr, prev_tag, pred_tag)
+            else: #"POS"
+                for item in [pos, word]:
+                    _update(self.pos_crf.emission_parameter, lr*0.1e-3, pred_tag, item)
+                _update(self.pos_crf.transition_parameter, lr, prev_tag, pred_tag)
+
 
 
 if __name__ == "__main__":
     dataset_full = os.path.join(os.path.dirname( __file__ ),"..", "data", "full")
     dataset_partial = os.path.join(os.path.dirname( __file__ ),"..", "data", "partial")
+
     pos_feature = posFeature(os.path.join(dataset_full, "train"), os.path.join(dataset_partial, "train"))
     feature_dict_combined = pos_feature.feature_dict_combined
     feature_dict = pos_feature.feature_dict
@@ -315,10 +411,15 @@ if __name__ == "__main__":
     print("Number of features: ", len(feature_dict.items()))
 
     pos_crf = posCRF(os.path.join(dataset_full, "train"), os.path.join(dataset_partial, "train"))
-    # input_path = os.path.join(dataset_full, "dev.in")
-    # output_path = os.path.join(dataset_full, "dev.p5.CRF.f3.out")
-    # pos_crf.inference_pos(input_path, output_path)
+    input_path = os.path.join(dataset_full, "dev.in")
+    output_path = os.path.join(dataset_full, "dev.p5.CRF.f3.out")
+    pos_crf.inference_pos(input_path, output_path)
 
     input_path_combine = os.path.join(dataset_full, "dev.in")
     output_path_combine = os.path.join(dataset_full, "dev.p5.CRF.f4.out")
     pos_crf.inference_pos(input_path_combine, output_path_combine, combine=True)
+
+    sp = StructuredPerceptron(os.path.join(dataset_full, "train"), os.path.join(dataset_partial, "train"))
+    input_path_sp = os.path.join(dataset_full, "dev.in")
+    output_path_sp = os.path.join(dataset_full, "dev.p5.SP.out")
+    sp.inference(input_path_sp, output_path_sp, type="POS")
