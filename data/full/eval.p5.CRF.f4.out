@@ -146,7 +146,7 @@ not O O
 at O O
 risk O O
 . O O
-Swiss O B-gpe
+Swiss B-gpe B-gpe
 drugmaker O O
 Roche O B-per
 said O O
@@ -285,7 +285,7 @@ Camara O B-per
 seized O O
 power O O
 in O O
-December O B-tim
+December B-tim B-tim
 just O O
 hours O O
 after O O
@@ -297,12 +297,12 @@ dictator O O
 Lansana O B-per
 Conte O I-per
 . O O
-Total O O
+Total B-geo O
 defended O O
 its O O
 business O O
 in O O
-Burma O B-geo
+Burma B-geo B-geo
 , O O
 saying O O
 companies O O
@@ -374,7 +374,7 @@ and O O
 government O O
 intimidation O O
 . O O
-Domestic O O
+Domestic B-gpe O
 and O O
 international O O
 efforts O O
@@ -535,7 +535,7 @@ on O O
 . O O
 Supporters O O
 of O O
-Judge O B-org
+Judge B-geo B-org
 Iftikhar O I-org
 Mohammed O B-per
 Chaudhry O I-per
@@ -565,13 +565,13 @@ on O O
 the O O
 site O O
 . O O
-Honiara O B-geo
+Honiara B-geo B-geo
 is O O
 reported O O
 to O O
 be O O
 quiet O O
-Saturday O B-tim
+Saturday B-tim B-tim
 , O O
 with O O
 Australian O B-gpe
@@ -630,7 +630,7 @@ bed O O
 in O O
 Mumbai O B-geo
 . O O
-Ethiopia O O
+Ethiopia B-per O
 recently O O
 began O O
 a O O
@@ -676,7 +676,7 @@ leftist O O
 . O O
 " O O
 Next O O
-Wednesday O B-tim
+Wednesday B-tim B-tim
 's O O
 start O O
 for O O
@@ -702,7 +702,7 @@ Busan O B-geo
 South O B-geo
 Korea O I-geo
 . O O
-Irate O O
+Irate B-gpe O
 fans O O
 burned O O
 the O O
@@ -794,11 +794,11 @@ nine O O
 Afghan O B-gpe
 soldiers O O
 . O O
-U.S. B-geo B-org
+U.S. B-org B-org
 Assistant O O
-Secretary B-org O
-of I-org O
-State I-org O
+Secretary O O
+of O O
+State B-org O
 Daniel O B-per
 Fried O I-per
 and O O
@@ -899,10 +899,10 @@ xenophobia O O
 . O O
 Back O O
 in O O
-May O B-tim
+May B-tim B-tim
 , O O
 a O O
-Nepalese O B-gpe
+Nepalese B-gpe B-gpe
 Sherpa O O
 climbed O O
 Everest O B-org
@@ -940,7 +940,7 @@ also O O
 found O O
 the O O
 deadly O O
-H5N1 O O
+H5N1 B-nat O
 variety O O
 of O O
 avian O O
@@ -1143,7 +1143,7 @@ be O O
 much O O
 higher O O
 . O O
-Toyota O B-per
+Toyota B-geo B-per
 gained O O
 nearly O O
 41 O O
@@ -1393,7 +1393,7 @@ throw O O
 the O O
 grenade O O
 . O O
-Benedicto O B-per
+Benedicto B-geo B-per
 Jimenez O I-per
 strongly O O
 denied O O
@@ -1550,7 +1550,7 @@ citizens O O
 Maduro O B-geo
 rejected O O
 a O O
-U.S. O B-geo
+U.S. B-geo B-geo
 apology O O
 for O O
 the O O
@@ -1701,7 +1701,7 @@ resources O O
 . O O
 Independence O O
 from O O
-Spain O B-gpe
+Spain B-geo B-gpe
 was O O
 declared O O
 in O O
@@ -1721,7 +1721,7 @@ town O O
 official O O
 told O O
 the O O
-French B-gpe B-gpe
+French O B-gpe
 news O O
 agency O O
 that O O
@@ -1843,7 +1843,7 @@ of O O
 state O O
 . O O
 Finance O O
-Minister O B-per
+Minister B-per B-per
 Rodrigo O I-per
 Cabezas O I-per
 said O O

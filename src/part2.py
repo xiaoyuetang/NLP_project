@@ -13,32 +13,17 @@ class CRF():
     def __init__(self, path_train):
         self.feature = Feature(path_train)
         self.feature_dict = self.feature.feature_dict
-        self.label_words, self.transition_tag = self.feature.label_words, self.feature.transition_tag
+        self.label_words = self.feature.label_words
         self.emission_parameter = self.feature.emission_parameter
         self.transition_parameter = self.feature.transition_parameter
-        self.score_dict = self.calculate_score()
         self.train_set = list(self.feature.words)
 
-    def calculate_score(self):
+    def get_score(self, x, y):
         '''
         a function to calculate the score for a given pair of input and output
         sequence pair (x_seq, y_seq), based on the above-mentioned features
         and weights used in Part 1.
         '''
-        score_dict = dict()
-        for feature, weight in self.feature_dict.items():
-            if "emission" in feature:
-                pair = feature.split("+")
-                tag, word = pair[0].replace("emission:",""), pair[1]
-                score_dict[feature] = weight*self.label_words[tag][word]
-            else:
-                pair = feature.split("+")
-                word, word2 = pair[0].replace("transition:",""), pair[1]
-                score_dict[feature] = weight*self.transition_tag[word][word2]
-
-        return score_dict
-
-    def get_score(self, x, y):
         dic = defaultdict(int)
 
         # count number of times each feature occured in the provided sequence
@@ -110,10 +95,10 @@ class CRF():
                     if sequence[k] in self.emission_parameter[label]:
                         emission = self.emission_parameter[label][sequence[k]]
                     else:
-                        emission = 0.0
+                        emission = 0.1e-8
                 else:
                     emission = self.emission_parameter[label]['#UNK#']
-                pi[k][label][0] += emission
+                pi[k][label][0] *= emission
 
         # Finally
         slist=[]
@@ -145,7 +130,7 @@ class CRF():
             if sequence[k] in self.emission_parameter[label]:
                 emission = self.emission_parameter[label][sequence[k]]
             else:
-                emission = np.log2(0.0)
+                emission = 0.1e-8
         else:
             emission = self.emission_parameter[label]['#UNK#']
         return emission
@@ -157,8 +142,4 @@ if __name__ == "__main__":
     crf = CRF(os.path.join(dataset, "train"))
     input_path = os.path.join(dataset, "dev.in")
     output_path = os.path.join(dataset, "dev.p2.out")
-    # train = Train(os.path.join(dataset, "train"))
-    n_items = take(5, crf.score_dict.items())
-    pprint(n_items)
-
     crf.inference(input_path, output_path)
