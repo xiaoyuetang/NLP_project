@@ -24,16 +24,18 @@ class Feature():
         emission_prbability = {}
         for tag in self.label_words:
             emission_prbability[tag] = {}
-            self.label_words[tag]['#UNK#'] = 0
+            # self.label_words[tag]['#UNK#'] = 0
+            # for word in list(self.label_words[tag]):
+            #     if word not in self.words:
+            #         self.label_words[tag]['#UNK#'] += self.label_words[tag].pop(word)
+            #     elif self.words[word] < 1:
+            #         self.label_words[tag]['#UNK#'] += self.label_words[tag].pop(word)
+            #         del self.words[word]
+            #     else:
+            #         emission_prbability[tag][word] = self.label_words[tag][word] / self.tags[tag]
+            # emission_prbability[tag]['#UNK#'] = self.label_words[tag]['#UNK#'] / self.tags[tag]
             for word in list(self.label_words[tag]):
-                if word not in self.words:
-                    self.label_words[tag]['#UNK#'] += self.label_words[tag].pop(word)
-                elif self.words[word] < 1:
-                    self.label_words[tag]['#UNK#'] += self.label_words[tag].pop(word)
-                    del self.words[word]
-                else:
-                    emission_prbability[tag][word] = self.label_words[tag][word] / self.tags[tag]
-            emission_prbability[tag]['#UNK#'] = self.label_words[tag]['#UNK#'] / self.tags[tag]
+                emission_prbability[tag][word] = self.label_words[tag][word] / self.tags[tag]
         return emission_prbability
 
     def calculate_trans_parameter(self):
@@ -54,7 +56,7 @@ class Feature():
                 _newT = segmented_line[1]
             else:
                 _newT = 'STOP'
-                
+
             if _preT not in tags:
                 tags[_preT] = 1
                 transition_tag[_preT] = {_newT: 1}

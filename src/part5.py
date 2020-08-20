@@ -154,7 +154,7 @@ class posCRF(CRF):
         # Initialization  stage
         for label in tags :
             if label not in self.transition_parameter['START']: continue
-            emission = self.get_estimate(sequence, label)
+            emission = self.get_estimate(sequence, label, 0)
 
             pi[0][label] = [self.transition_parameter['START'][label] * emission]
 
@@ -168,24 +168,7 @@ class posCRF(CRF):
                 piList.sort(reverse=True)
                 pi[k][label]=piList[0]
 
-                if sequence[k].split(" ")[0] in self.train_set:
-                    if sequence[k].split(" ")[0] in self.emission_parameter[label]:
-                        emission_word = self.emission_parameter[label][sequence[k].split(" ")[0]]
-                    else:
-                        emission_word  = 0.1e-8
-                else:
-                    emission_word = self.emission_parameter[label]['#UNK#']
-
-                if sequence[k].split(" ")[1] in self.train_set:
-                    if sequence[k].split(" ")[1] in self.emission_parameter[label]:
-                        emission_pos = self.emission_parameter[label][sequence[k].split(" ")[1]]
-                    else:
-                        emission_pos = 0.1e-8
-                else:
-                    emission_pos = self.emission_parameter[label]['#UNK#']
-
-                emission = emission_pos*emission_word
-
+                emission = self.get_estimate(sequence, label, k)
                 pi[k][label][0] *= emission
 
         # Finally
@@ -221,7 +204,7 @@ class posCRF(CRF):
         # Initialization  stage
         for label in tags :
             if label not in self.transition_parameter['START']: continue
-            emission = self.get_estimate(sequence, label)
+            emission = self.get_estimate(sequence, label, 0)
 
             try:
                 pi[0][label] = [self.transition_parameter['START'][label] * emission \
@@ -243,24 +226,7 @@ class posCRF(CRF):
                 piList.sort(reverse=True)
                 pi[k][label]=piList[0]
 
-                if sequence[k].split(" ")[0] in self.train_set:
-                    if sequence[k].split(" ")[0] in self.emission_parameter[label]:
-                        emission_word = self.emission_parameter[label][sequence[k].split(" ")[0]]
-                    else:
-                        emission_word  = 0.1e-8
-                else:
-                    emission_word = self.emission_parameter[label]['#UNK#']
-
-                if sequence[k].split(" ")[1] in self.train_set:
-                    if sequence[k].split(" ")[1] in self.emission_parameter[label]:
-                        emission_pos = self.emission_parameter[label][sequence[k].split(" ")[1]]
-                    else:
-                        emission_pos = 0.1e-8
-                else:
-                    emission_pos = self.emission_parameter[label]['#UNK#']
-
-                emission = emission_pos*emission_word
-
+                emission = self.get_estimate(sequence, label, k)
                 pi[k][label][0] *= emission
 
         # Finally
@@ -284,23 +250,30 @@ class posCRF(CRF):
 
         return prediction
 
-    def get_estimate(self, sequence, label):
+    def get_estimate(self, sequence, label, k):
         '''
         function to deal with unseen data.
         '''
-        k = 0
         if sequence[k].split(" ")[0] in self.train_set:
             if sequence[k].split(" ")[0] in self.emission_parameter[label]:
-                emission = self.emission_parameter[label][sequence[k].split(" ")[0]]
+                emission_word = self.emission_parameter[label][sequence[k].split(" ")[0]]
             else:
-                emission = 0.1e-8
-        elif sequence[k].split(" ")[1] in self.train_set:
-            if sequence[k].split(" ")[1] in self.emission_parameter[label]:
-                emission = self.emission_parameter[label][sequence[k].split(" ")[1]]
-            else:
-                emission = 0.1e-8
+                emission_word  = 0.1e-8
         else:
-            emission = self.emission_parameter[label]['#UNK#']
+            # emission_word = self.emission_parameter[label]['#UNK#']
+            emission_word  = 0.1e-8
+
+        if sequence[k].split(" ")[1] in self.train_set:
+            if sequence[k].split(" ")[1] in self.emission_parameter[label]:
+                emission_pos = self.emission_parameter[label][sequence[k].split(" ")[1]]
+            else:
+                emission_pos = 0.1e-8
+        else:
+            # emission_pos = self.emission_parameter[label]['#UNK#']
+            emission_pos = 0.1e-8
+
+        emission = emission_pos*emission_word
+
         return emission
 
 
@@ -315,9 +288,9 @@ if __name__ == "__main__":
     print("Number of features: ", len(feature_dict.items()))
 
     pos_crf = posCRF(os.path.join(dataset_full, "train"), os.path.join(dataset_partial, "train"))
-    # input_path = os.path.join(dataset_full, "dev.in")
-    # output_path = os.path.join(dataset_full, "dev.p5.CRF.f3.out")
-    # pos_crf.inference_pos(input_path, output_path)
+    input_path = os.path.join(dataset_full, "dev.in")
+    output_path = os.path.join(dataset_full, "dev.p5.CRF.f3.out")
+    pos_crf.inference_pos(input_path, output_path)
 
     input_path_combine = os.path.join(dataset_full, "dev.in")
     output_path_combine = os.path.join(dataset_full, "dev.p5.CRF.f4.out")
