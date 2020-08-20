@@ -292,9 +292,10 @@ class LinearChainCRF():
                 if Y[t] == Yprime[t]:
                     correct_count += 1
 
-        print('Correct: %d' % correct_count)
-        print('Total: %d' % total_count)
-        print('Performance: %f' % (correct_count/total_count))
+        
+        # print('Correct: %d' % correct_count)
+        # print('Total: %d' % total_count)
+        # print('Performance: %f' % (correct_count/total_count))
 
     def print_test_result(self, test_corpus_filename):
         test_data = self._read_corpus(test_corpus_filename)

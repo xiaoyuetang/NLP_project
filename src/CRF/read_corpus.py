@@ -13,14 +13,14 @@ def read_conll_corpus(filename):
     Y = list()
     for data_string in data_string_list:
         words = data_string.strip().split()
-        if len(words) is 0:
+        if len(words) == 0:
             data.append((X, Y))
             X = list()
             Y = list()
         else:
-            if element_size is 0:
+            if element_size == 0:
                 element_size = len(words)
-            elif element_size is not len(words):
+            elif element_size != len(words):
                 raise FileFormatError
             X.append(words[:-1])
             Y.append(words[-1])
