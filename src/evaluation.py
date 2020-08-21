@@ -19,10 +19,15 @@ def eval(pred_path, gold_path, out_path):
             if len(words_gold)==1:
                 continue
 
-            elif len(words_gold)==2:
+            elif len(words_gold)==2 and len(words_pred)==2:
                 gold_tags.append(words_gold[1])
                 pred_tags.append(words_pred[1])
                 wf.write(words_pred[0] + " " + words_pred[1] + " " + words_gold[1] +"\n")
+
+            elif len(words_gold)>2 and len(words_pred)==2:
+                gold_tags.append(words_gold[2])
+                pred_tags.append(words_pred[1])
+                wf.write(words_pred[0] + " " + words_pred[1] + " " + words_gold[2] +"\n")
 
             else:
                 gold_tags.append(words_gold[2])
@@ -38,6 +43,8 @@ if __name__ == "__main__":
 
     print("PART II (ii)")
     eval(dataset_partial+'/dev.p2.out', dataset_partial+'/dev.out', dataset_partial+'/eval.p2.out')
+    print("PART IV (ii)")
+    eval(dataset_partial+'/dev.p4.out', dataset_partial+'/dev.out', dataset_partial+'/eval.p4.out')
     print("PART V (i)")
     eval(dataset_full+'/dev.p5.CRF.f3.out', dataset_full+'/dev.out', dataset_full+'/eval.p5.CRF.f3.out')
     print("PART V (ii)")

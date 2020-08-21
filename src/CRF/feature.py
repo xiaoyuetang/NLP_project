@@ -21,29 +21,29 @@ def default_feature_func(_, X, t):
     # B: Bigram
     features = list()
     features.append('U[0]:%s' % X[t][0])
-    # features.append('POS_U[0]:%s' % X[t][1])
+    features.append('POS_U[0]:%s' % X[t][1])
     if t < length-1:
         features.append('U[+1]:%s' % (X[t+1][0]))
         features.append('B[0]:%s+%s' % (X[t][0], X[t+1][0]))
-        # features.append('POS_U[1]:%s' % X[t+1][1])
-        # features.append('POS_B[0]:%s+%s' % (X[t][1], X[t+1][1]))
+        features.append('POS_U[1]:%s' % X[t+1][1])
+        features.append('POS_B[0]:%s+%s' % (X[t][1], X[t+1][1]))
         if t < length-2:
             features.append('U[+2]:%s' % (X[t+2][0]))
-            # features.append('POS_U[+2]:%s' % (X[t+2][1]))
-            # features.append('POS_B[+1]:%s+%s' % (X[t+1][1], X[t+2][1]))
-            # features.append('POS_T[0]:%s+%s+%s' % (X[t][1], X[t+1][1], X[t+2][1]))
+            features.append('POS_U[+2]:%s' % (X[t+2][1]))
+            features.append('POS_B[+1]:%s+%s' % (X[t+1][1], X[t+2][1]))
+            features.append('POS_T[0]:%s+%s+%s' % (X[t][1], X[t+1][1], X[t+2][1]))
     if t > 0:
         features.append('U[-1]:%s' % (X[t-1][0]))
         features.append('B[-1]:%s+%s' % (X[t-1][0], X[t][0]))
-        # features.append('POS_U[-1]:%s' % (X[t-1][1]))
-        # features.append('POS_B[-1]:%s+%s' % (X[t-1][1], X[t][1]))
-        # if t < length-1:
-            # features.append('POS_T[-1]:%s+%s+%s' % (X[t-1][1], X[t][1], X[t+1][1]))
+        features.append('POS_U[-1]:%s' % (X[t-1][1]))
+        features.append('POS_B[-1]:%s+%s' % (X[t-1][1], X[t][1]))
+        if t < length-1:
+            features.append('POS_T[-1]:%s+%s+%s' % (X[t-1][1], X[t][1], X[t+1][1]))
         if t > 1:
             features.append('U[-2]:%s' % (X[t-2][0]))
-            # features.append('POS_U[-2]:%s' % (X[t-2][1]))
-            # features.append('POS_B[-2]:%s+%s' % (X[t-2][1], X[t-1][1]))
-            # features.append('POS_T[-2]:%s+%s+%s' % (X[t-2][1], X[t-1][1], X[t][1]))
+            features.append('POS_U[-2]:%s' % (X[t-2][1]))
+            features.append('POS_B[-2]:%s+%s' % (X[t-2][1], X[t-1][1]))
+            features.append('POS_T[-2]:%s+%s+%s' % (X[t-2][1], X[t-1][1], X[t][1]))
 
     return features
 
@@ -104,6 +104,9 @@ class FeatureSet():
         """
         for feature_string in self.feature_func(X, t):
             if feature_string in self.feature_dic.keys():
+                '''
+                add transition features
+                '''
                 if (prev_y, y) in self.feature_dic[feature_string].keys():
                     self.empirical_counts[self.feature_dic[feature_string][(prev_y, y)]] += 1
                 else:
@@ -111,6 +114,9 @@ class FeatureSet():
                     self.feature_dic[feature_string][(prev_y, y)] = feature_id
                     self.empirical_counts[feature_id] += 1
                     self.num_features += 1
+                '''
+                add emission features
+                '''
                 if (-1, y) in self.feature_dic[feature_string].keys():
                     self.empirical_counts[self.feature_dic[feature_string][(-1, y)]] += 1
                 else:
@@ -120,12 +126,16 @@ class FeatureSet():
                     self.num_features += 1
             else:
                 self.feature_dic[feature_string] = dict()
-                # Bigram feature
+                '''
+                add bigram features
+                '''
                 feature_id = self.num_features
                 self.feature_dic[feature_string][(prev_y, y)] = feature_id
                 self.empirical_counts[feature_id] += 1
                 self.num_features += 1
-                # Unigram feature
+                '''
+                add unigram features
+                '''
                 feature_id = self.num_features
                 self.feature_dic[feature_string][(-1, y)] = feature_id
                 self.empirical_counts[feature_id] += 1
@@ -192,7 +202,7 @@ class FeatureSet():
         for feature_string in self.feature_dic.keys():
             serialized[feature_string] = dict()
             for (prev_y, y), feature_id in self.feature_dic[feature_string].items():
-                serialized[feature_string]['%d_%d' % (prev_y, y)] = feature_id
+                serialized[feature_string]['%d+%d' % (prev_y, y)] = feature_id
         return serialized
 
     def deserialize_feature_dic(self, serialized):
@@ -200,6 +210,6 @@ class FeatureSet():
         for feature_string in serialized.keys():
             feature_dic[feature_string] = dict()
             for transition_string, feature_id in serialized[feature_string].items():
-                prev_y, y = transition_string.split('_')
+                prev_y, y = transition_string.split('+')
                 feature_dic[feature_string][(int(prev_y), int(y))] = feature_id
         return feature_dic

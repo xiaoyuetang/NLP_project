@@ -1,30 +1,36 @@
-from utils.exceptions import FileFormatError
-
-
-def read_conll_corpus(filename):
-    """
-    Read a corpus file with a format used in CoNLL.
-    """
+#Function used to read training file
+def read_train_file(filename):
     data = list()
-    data_string_list = list(open(filename))
-
-    element_size = 0
-    X = list()
-    Y = list()
-    for data_string in data_string_list:
+    segmentLine = list(open(filename,encoding='UTF-8',mode='r'))
+    word = list()
+    tag = list()
+    for data_string in segmentLine:
         words = data_string.strip().split()
         if len(words) == 0:
-            data.append((X, Y))
-            X = list()
-            Y = list()
+            #seperate sentenses
+            data.append((word, tag))
+            word = list()
+            tag = list()
         else:
-            if element_size == 0:
-                element_size = len(words)
-            elif element_size != len(words):
-                raise FileFormatError
-            X.append(words[:-1])
-            Y.append(words[-1])
-    if len(X) > 0:
-        data.append((X, Y))
+            word.append(words[:-1])
+            tag.append(words[-1])
+    if len(word) > 0:
+        data.append((word, tag))
+    return data
+
+#Function used to read test file
+def read_test_file(filename):
+    data = list()
+    segmentLine = list(open(filename,encoding='utf-8',mode='r'))
+    word = list()
+    for data_string in segmentLine:
+        words = data_string.strip().split()
+        if len(words) == 0:
+            data.append((word))
+            word = list()
+        else:
+            word.append(words)
+    if len(word) > 0:
+        data.append((word))
 
     return data

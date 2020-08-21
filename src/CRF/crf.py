@@ -1,4 +1,4 @@
-from read_corpus import read_conll_corpus
+from read_corpus import read_train_file, read_test_file
 from feature import FeatureSet, STARTING_LABEL_INDEX
 
 from math import exp, log
@@ -26,6 +26,7 @@ def _callback(params):
     ITERATION_NUM += 1
     TOTAL_SUB_ITERATIONS += SUB_ITERATION_NUM
     SUB_ITERATION_NUM = 0
+
 
 def _generate_potential_table(params, num_labels, feature_set, X, inference=True):
     """
@@ -65,9 +66,6 @@ def _forward_backward(num_labels, time_length, potential_table):
     """
     Calculates alpha(forward terms), beta(backward terms), and Z(instance-specific normalization factor)
         with a scaling method(suggested by Rabiner, 1989).
-    * Reference:
-        - 1989, Lawrence R. Rabiner, A Tutorial on Hidden Markov Models and Selected Applications
-        in Speech Recognition
     """
     alpha = np.zeros((time_length, num_labels))
     scaling_dic = dict()
@@ -114,7 +112,6 @@ def _forward_backward(num_labels, time_length, potential_table):
     Z = sum(alpha[time_length-1])
 
     return alpha, beta, Z, scaling_dic
-
 
 def _calc_path_score(potential_table, scaling_dic, Y, label_dic):
     score = 1.0
@@ -165,17 +162,18 @@ def _log_likelihood(params, *args):
                     expected_counts[fid] += prob
 
     likelihood = np.dot(empirical_counts, params) - total_logZ - \
-                 np.sum(np.dot(params,params))/(squared_sigma*2)
+                 np.sum(np.dot(params,params))/(squared_sigma) #L2 regularization
 
     gradients = empirical_counts - expected_counts - params/squared_sigma
     global GRADIENT
     GRADIENT = gradients
 
     global SUB_ITERATION_NUM
-    sub_iteration_str = '    '
-    if SUB_ITERATION_NUM > 0:
-        sub_iteration_str = '(' + '{0:02d}'.format(SUB_ITERATION_NUM) + ')'
-    print('  ', '{0:03d}'.format(ITERATION_NUM), sub_iteration_str, ':', likelihood * -1)
+    # sub_iteration_str = '    '
+    # if SUB_ITERATION_NUM > 0:
+        # sub_iteration_str = '(' + '{0:02d}'.format(SUB_ITERATION_NUM) + ')'
+    # print('  ', '{0:03d}'.format(ITERATION_NUM), sub_iteration_str, ':', likelihood * -1)
+    print('Loss: {0:.4f}'.format(likelihood * -1))
 
     SUB_ITERATION_NUM += 1
 
@@ -207,7 +205,7 @@ class LinearChainCRF():
         pass
 
     def _read_corpus(self, filename):
-        return read_conll_corpus(filename)
+        return read_train_file(filename)
 
     def _get_training_feature_data(self):
         return [[self.feature_set.get_feature_list(X, t) for t in range(len(X))]
@@ -216,23 +214,15 @@ class LinearChainCRF():
     def _estimate_parameters(self):
         """
         Estimates parameters using L-BFGS.
-        * References:
-            - R. H. Byrd, P. Lu and J. Nocedal. A Limited Memory Algorithm for Bound Constrained Optimization,
-            (1995), SIAM Journal on Scientific and Statistical Computing, 16, 5, pp. 1190-1208.
-            - C. Zhu, R. H. Byrd and J. Nocedal. L-BFGS-B: Algorithm 778: L-BFGS-B, FORTRAN routines for large
-            scale bound constrained optimization (1997), ACM Transactions on Mathematical Software, 23, 4,
-            pp. 550 - 560.
-            - J.L. Morales and J. Nocedal. L-BFGS-B: Remark on Algorithm 778: L-BFGS-B, FORTRAN routines for
-            large scale bound constrained optimization (2011), ACM Transactions on Mathematical Software, 38, 1.
         """
         training_feature_data = self._get_training_feature_data()
         print('* Squared sigma:', self.squared_sigma)
         print('* Start L-BGFS')
         print('   ========================')
-        print('   iter(sit): likelihood')
+        print('   Loss: likelihood * -1')
         print('   ------------------------')
         self.params, log_likelihood, information = \
-                fmin_l_bfgs_b(func=_log_likelihood, fprime=_gradient,
+                fmin_l_bfgs_b(func=_log_likelihood, fprime=_gradient, pgtol=0.01,
                               x0=np.zeros(len(self.feature_set)),
                               args=(self.training_data, self.feature_set, training_feature_data,
                                     self.feature_set.get_empirical_counts(),
@@ -277,25 +267,23 @@ class LinearChainCRF():
         print('* Elapsed time: %f' % elapsed_time)
         print('* [%s] Training done' % datetime.datetime.now())
 
-    def test(self, test_corpus_filename):
+    def test(self, test_corpus_filename, output_path):
         if self.params is None:
             raise BaseException("You should load a model first!")
 
-        test_data = self._read_corpus(test_corpus_filename)
+        test_data = read_test_file(test_corpus_filename)
+        with open (output_path, encoding='UTF-8', mode='w') as f:
+            for X in test_data:
+                Yprime = self.inference(X)
 
-        total_count = 0
-        correct_count = 0
-        for X, Y in test_data:
-            Yprime = self.inference(X)
-            for t in range(len(Y)):
-                total_count += 1
-                if Y[t] == Yprime[t]:
-                    correct_count += 1
-
-        
-        # print('Correct: %d' % correct_count)
-        # print('Total: %d' % total_count)
-        # print('Performance: %f' % (correct_count/total_count))
+                #Write the predicted result to the file
+                for t in range(len(X)):
+                    f.write(X[t][0])
+                    f.write(' ')
+                    f.write(Yprime[t])
+                    f.write('\n')
+                f.write('\n')
+        print ('Finished writing to file')
 
     def print_test_result(self, test_corpus_filename):
         test_data = self._read_corpus(test_corpus_filename)
