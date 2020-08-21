@@ -72,7 +72,7 @@ def _forward_backward(num_labels, time_length, potential_table):
     t = 0
     for label_id in range(num_labels):
         alpha[t, label_id] = potential_table[t][STARTING_LABEL_INDEX, label_id]
-    #alpha[0, :] = potential_table[0][STARTING_LABEL_INDEX, :]  # slow
+
     t = 1
     while t < time_length:
         scaling_time = None
@@ -102,7 +102,7 @@ def _forward_backward(num_labels, time_length, potential_table):
     t = time_length - 1
     for label_id in range(num_labels):
         beta[t, label_id] = 1.0
-    #beta[time_length - 1, :] = 1.0     # slow
+
     for t in range(time_length-2, -1, -1):
         for label_id in range(1, num_labels):
             beta[t, label_id] = np.dot(beta[t+1,:], potential_table[t+1][label_id,:])
@@ -165,14 +165,11 @@ def _log_likelihood(params, *args):
                  np.sum(np.dot(params,params))/(squared_sigma) #L2 regularization
 
     gradients = empirical_counts - expected_counts - params/squared_sigma
+
     global GRADIENT
     GRADIENT = gradients
-
     global SUB_ITERATION_NUM
-    # sub_iteration_str = '    '
-    # if SUB_ITERATION_NUM > 0:
-        # sub_iteration_str = '(' + '{0:02d}'.format(SUB_ITERATION_NUM) + ')'
-    # print('  ', '{0:03d}'.format(ITERATION_NUM), sub_iteration_str, ':', likelihood * -1)
+
     print('Loss: {0:.4f}'.format(likelihood * -1))
 
     SUB_ITERATION_NUM += 1

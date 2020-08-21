@@ -1,9 +1,9 @@
 Former O
 U.N. B-org
-Secretary I-org
-General I-org
-Kofi I-org
-Annan I-org
+Secretary B-per
+General I-per
+Kofi I-per
+Annan I-per
 had O
 called O
 for O
@@ -29,7 +29,7 @@ of O
 the O
 cities O
 of O
-Xingning O
+Xingning B-geo
 and O
 Meizhou B-geo
 for O
@@ -65,7 +65,7 @@ area O
 earlier O
 in O
 the O
-day O
+day B-tim
 . O
 
 Interim O
@@ -103,7 +103,7 @@ killed O
 more O
 than O
 100 O
-Iraqis O
+Iraqis B-geo
 over O
 the O
 past O
@@ -125,7 +125,7 @@ Afghanistan B-geo
 Japan B-geo
 , O
 South B-geo
-Korea I-geo
+Korea B-geo
 and O
 China B-geo
 before O
@@ -140,9 +140,9 @@ March B-tim
 The O
 People O
 's O
-Liberation B-org
-Army I-org
-Daily I-org
+Liberation O
+Army O
+Daily O
 newspaper O
 said O
 Saturday B-tim
@@ -309,7 +309,7 @@ to O
 rotate O
 home O
 in O
-September B-geo
+September B-tim
 and O
 others O
 whose O
@@ -336,7 +336,7 @@ run-off O
 . O
 
 The O
-secretary-general O
+secretary-general B-org
 will O
 also O
 be O
@@ -389,9 +389,9 @@ the O
 issue O
 in O
 San B-geo
-Francisco I-geo
+Francisco B-geo
 , O
-California B-geo
+California O
 earlier O
 this O
 week O
@@ -412,7 +412,7 @@ Rwandan B-gpe
 army O
 ) O
 and O
-Interahamwe B-geo
+Interahamwe B-org
 , O
 are O
 mostly O
@@ -420,7 +420,7 @@ responsible O
 for O
 the O
 1994 O
-Rwandan O
+Rwandan B-gpe
 genocide O
 that O
 killed O
@@ -429,18 +429,18 @@ about O
 people O
 during O
 a O
-three-month O
+three-month B-tim
 period O
 . O
 
 Speaking O
 to O
-Iranian O
+Iranian B-gpe
 state O
 television O
 , O
-Nourollah B-per
-Rezai I-per
+Nourollah O
+Rezai B-per
 Niaraki I-per
 rejected O
 earlier O
@@ -507,7 +507,7 @@ inconvenience O
 . O
 
 The O
-French-Colombian B-gpe
+French-Colombian O
 politician O
 has O
 been O
@@ -534,7 +534,7 @@ of O
 Colombia B-geo
 , O
 or O
-FARC B-geo
+FARC B-org
 , O
 to O
 release O
@@ -555,7 +555,7 @@ offices O
 , O
 just O
 one O
-day O
+day B-tim
 after O
 he O
 stepped O
@@ -643,12 +643,12 @@ Bush I-per
 said O
 at O
 the O
-White B-org
-House I-org
-Tuesday I-org
+White O
+House O
+Tuesday B-tim
 , O
 that O
-Rumsfeld B-geo
+Rumsfeld O
 is O
 doing O
 a O
@@ -679,7 +679,7 @@ a O
 language O
 close O
 to O
-Turkish B-geo
+Turkish B-gpe
 . O
 
 Witnesses O
@@ -692,13 +692,13 @@ the O
 teachers O
 as O
 the O
-Dutch O
+Dutch B-gpe
 principal O
 Hendrik B-per
 Taatgen I-per
 and O
 his O
-Australian O
+Australian B-gpe
 deputy O
 Brian B-per
 Ambrosio I-per
@@ -757,7 +757,7 @@ energy O
 . O
 
 The O
-Swedish O
+Swedish B-gpe
 security O
 police O
 say O
@@ -765,7 +765,7 @@ the O
 man O
 , O
 a O
-Swedish O
+Swedish B-gpe
 citizen O
 , O
 was O
@@ -791,7 +791,7 @@ Sudanese B-gpe
 rebels O
 attacked O
 the O
-Chadian O
+Chadian B-gpe
 town O
 of O
 Adre B-geo
@@ -804,16 +804,16 @@ top O
 member O
 of O
 the O
-Obama B-geo
+Obama O
 administration O
 begins O
 a O
 visit O
 to O
 the O
-Middle B-org
-East I-org
-Sunday I-org
+Middle O
+East O
+Sunday B-tim
 to O
 discuss O
 global O
@@ -852,11 +852,11 @@ government O
 Zimbabwe B-geo
 's O
 main O
-labor O
-union O
+labor B-org
+union I-org
 says O
 two O
-South B-geo
+South O
 African-based O
 trade O
 union O
@@ -889,8 +889,8 @@ In O
 National B-org
 Basketball I-org
 Association I-org
-( O
-NBA B-geo
+( I-org
+NBA O
 ) O
 action O
 Thursday B-tim
@@ -903,12 +903,12 @@ points O
 to O
 lead O
 the O
-Houston B-org
-Rockets I-org
+Houston O
+Rockets O
 over O
 the O
-Cleveland B-org
-Cavaliers I-org
+Cleveland O
+Cavaliers O
 , O
 90-81 O
 in O
@@ -971,7 +971,7 @@ is O
 following O
 up O
 with O
-Turkish O
+Turkish B-gpe
 authorities O
 about O
 the O
@@ -1032,7 +1032,7 @@ inclusion O
 in O
 Venezuela B-geo
 's O
-Petrocaribe B-geo
+Petrocaribe B-org
 program O
 which O
 offers O
@@ -1050,8 +1050,8 @@ Venezuelan O
 oil O
 . O
 
-Justice B-per
-Department I-per
+Justice B-org
+Department I-org
 officials O
 notified O
 judges O
@@ -1061,9 +1061,9 @@ the O
 cases O
 at O
 the O
-U.S. B-org
-District I-org
-Court I-org
+U.S. B-geo
+District O
+Court O
 in O
 Washington B-geo
 that O
@@ -1084,13 +1084,13 @@ December B-tim
 , O
 Bolivians O
 elected O
-Movement B-org
-Toward I-org
-Socialism I-org
+Movement O
+Toward O
+Socialism O
 leader O
 Evo B-per
 MORALES I-per
-president O
+president I-per
 - O
 by O
 the O
@@ -1107,7 +1107,7 @@ civilian O
 rule O
 in O
 1982 B-tim
-- O
+- I-tim
 after O
 he O
 ran O
@@ -1179,19 +1179,19 @@ residents O
 
 Millions O
 of O
-Americans O
+Americans B-gpe
 traditionally O
 enjoy O
 a O
 roasted O
-turkey O
+turkey B-org
 meal O
 on O
 this O
-Thursday B-org
-'s I-org
-Thanksgiving I-org
-Day I-org
+Thursday B-tim
+'s O
+Thanksgiving B-tim
+Day I-tim
 holiday O
 . O
 
@@ -1199,7 +1199,7 @@ She O
 also O
 met O
 with O
-Egyptian O
+Egyptian B-gpe
 democracy O
 activists O
 Wednesday B-tim
@@ -1211,10 +1211,10 @@ statement O
 released O
 Thursday B-tim
 , O
-Australian O
+Australian B-gpe
 Defense O
-Minister B-per
-Robert I-per
+Minister O
+Robert B-per
 Hill I-per
 said O
 the O
@@ -1243,7 +1243,7 @@ crimes O
 tribunal O
 in O
 The O
-Hague B-org
+Hague B-geo
 has O
 already O
 sentenced O
@@ -1358,7 +1358,7 @@ exploded O
 in O
 southern O
 Iraq B-geo
-Sunday I-geo
+Sunday B-tim
 outside O
 an O
 apartment O
@@ -1404,25 +1404,25 @@ violence O
 
 Prosecutors O
 say O
-Crnogorac B-org
+Crnogorac O
 was O
 a O
 member O
 of O
-Bosnian O
+Bosnian B-gpe
 Serb O
 forces O
 that O
 captured O
 the O
 U.N.-protected O
-Srebrenica B-org
-enclave O
+Srebrenica B-geo
+enclave I-geo
 on O
 July B-tim
 11 I-tim
-, O
-1995 O
+, I-tim
+1995 I-tim
 , O
 at O
 the O
@@ -1470,7 +1470,7 @@ statement O
 recommended O
 that O
 all O
-Americans O
+Americans B-gpe
 , O
 including O
 journalists O
@@ -1501,8 +1501,8 @@ Musharraf I-per
 and O
 British B-gpe
 Prime B-per
-Minister I-per
-Tony I-per
+Minister O
+Tony B-per
 Blair I-per
 are O
 holding O
@@ -1519,8 +1519,8 @@ against O
 terrorism O
 , O
 the O
-Middle B-geo
-East I-geo
+Middle O
+East O
 , O
 Afghanistan B-geo
 and O
@@ -1545,12 +1545,12 @@ nominated O
 as O
 director O
 of O
-the B-geo
-CIA I-geo
+the O
+CIA O
 in O
 the O
 new O
-Obama B-org
+Obama O
 administration O
 . O
 
@@ -1576,10 +1576,10 @@ ordinary O
 prisoners O
 . O
 
-CNN B-geo
+CNN B-org
 says O
 the O
-Farsi B-geo
+Farsi O
 word O
 for O
 " O
@@ -1594,7 +1594,7 @@ weapons O
 . O
 " O
 
-India B-per
+India B-geo
 was O
 6 O
 without O
@@ -1612,7 +1612,7 @@ U.N. B-org
 Security I-org
 Council I-org
 in O
-1999 O
+1999 B-tim
 called O
 on O
 nations O
@@ -1628,11 +1628,11 @@ with O
 suspected O
 links O
 to O
-Osama B-geo
-bin I-geo
-Laden I-geo
+Osama B-per
+bin I-per
+Laden I-per
 's O
-al-Qaida B-geo
+al-Qaida B-org
 network O
 and O
 Afghanistan B-geo
@@ -1642,7 +1642,7 @@ Taleban B-org
 regime O
 . O
 
-Chrysler B-per
+Chrysler O
 saw O
 sales O
 fall O
@@ -1697,8 +1697,8 @@ to O
 be O
 aboard O
 the O
-Sudan B-org
-Airways I-org
+Sudan B-geo
+Airways O
 plane O
 when O
 it O
@@ -1731,8 +1731,8 @@ as O
 violence O
 in O
 the O
-Middle B-geo
-East I-geo
+Middle O
+East O
 and O
 Nigeria B-geo
 threatened O
@@ -1751,8 +1751,8 @@ the O
 bombing O
 . O
 
-United B-org
-Nations I-org
+United B-geo
+Nations O
 forensic O
 experts O
 have O
@@ -1794,9 +1794,9 @@ The O
 United B-org
 Nations I-org
 Food I-org
-and O
-Agriculture B-per
-Organization I-per
+and I-org
+Agriculture I-org
+Organization I-org
 says O
 climate O
 change O
@@ -1899,7 +1899,7 @@ Council I-org
 , O
 says O
 the O
-Bush B-geo
+Bush O
 administration O
 is O
 holding O
@@ -1914,7 +1914,7 @@ the O
 negotiations O
 . O
 
-Abkhaz B-geo
+Abkhaz B-gpe
 power O
 company O
 chief O
@@ -1971,11 +1971,11 @@ published O
 Sunday B-tim
 by O
 a O
-French O
+French B-gpe
 newspaper O
 , O
-Nord B-per
-Eclair I-per
+Nord B-org
+Eclair I-org
 , O
 the O
 former O
@@ -1992,7 +1992,7 @@ head O
 of O
 the O
 " O
-Rally B-geo
+Rally O
 for O
 Republicans O
 " O
@@ -2005,9 +2005,9 @@ official O
 for O
 Beijing B-geo
 's O
-Olympic B-geo
-organizing O
-committee O
+Olympic B-org
+organizing I-org
+committee I-org
 , O
 Li B-per
 Zhanjun I-per
@@ -2033,10 +2033,10 @@ Burma B-geo
 pro-democracy O
 leader O
 , O
-Aung B-per
-San I-per
-Suu I-per
-Kyi I-per
+Aung B-geo
+San I-geo
+Suu I-geo
+Kyi I-geo
 , O
 is O
 resting O
@@ -2104,10 +2104,10 @@ completed O
 . O
 
 The O
-socialist B-gpe
+socialist O
 leader O
 said O
-Uruguay B-org
+Uruguay B-geo
 will O
 resume O
 diplomatic O
@@ -2116,7 +2116,7 @@ with O
 Havana B-geo
 on O
 March B-tim
-first O
+first I-tim
 , O
 when O
 he O
@@ -2146,8 +2146,8 @@ Kenya B-org
 Media I-org
 Council I-org
 , O
-Wachira B-per
-Waruru I-per
+Wachira B-org
+Waruru I-org
 , O
 called O
 the O
@@ -2233,9 +2233,9 @@ countries O
 to O
 recognize O
 both O
-China B-org
-and I-org
-Taiwan I-org
+China B-geo
+and O
+Taiwan B-geo
 , O
 which O
 it O
@@ -2271,14 +2271,14 @@ employment O
 of O
 17,500 O
 mostly O
-Chinese O
+Chinese B-gpe
 workers O
 and O
 sizable O
 shipments O
 to O
 the O
-US B-org
+US O
 under O
 duty O
 and O
