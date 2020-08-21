@@ -53,3 +53,5 @@ if __name__ == "__main__":
     eval(dataset_full+'/dev.p5.SP.out', dataset_full+'/dev.out', dataset_full+'/eval.p5.SP.out')
     print("PART VI (i)")
     eval(dataset_full+'/dev.p6.CRF.out', dataset_full+'/dev.out', dataset_full+'/eval.p6.CRF.out')
+    print("PART VII (ii)")
+    eval(dataset_partial+'/dev.p6.model.out', dataset_partial+'/dev.out', dataset_partial+'/eval.p6.model.out')
