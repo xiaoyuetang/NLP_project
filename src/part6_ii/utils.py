@@ -1,5 +1,7 @@
 import pickle
 
+import torch
+
 
 def merge_maps(dict1, dict2):
     """用于合并两个word2id或者两个tag2id"""
@@ -18,7 +20,7 @@ def save_model(model, file_name):
 def load_model(file_name):
     """用于加载模型"""
     with open(file_name, "rb") as f:
-        model = pickle.load(f)
+        model = torch.load(file_name, map_location=torch.device('cpu'))
     return model
 
 

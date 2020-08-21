@@ -2,26 +2,61 @@ from os.path import join
 from codecs import open
 
 
-def build_corpus(split, make_vocab=True, data_dir="./ResumeNER"):
+def build_corpus(split, make_vocab=True, data_dir="../../data/partial"):
     """读取数据"""
     assert split in ['train', 'dev', 'test']
 
     word_lists = []
     tag_lists = []
-    with open(join(data_dir, split+".char.bmes"), 'r', encoding='utf-8') as f:
-        word_list = []
-        tag_list = []
-        for line in f:
-            if line != '\n':
-                word, tag = line.strip('\n').split()
-                word_list.append(word)
-                tag_list.append(tag)
-            else:
-                word_lists.append(word_list)
-                tag_lists.append(tag_list)
-                word_list = []
-                tag_list = []
-
+    # with open(join(data_dir, split+".char.bmes"), 'r', encoding='utf-8') as f:
+    if split == 'train':
+        filename = 'train'
+        with open(join(data_dir, filename)) as f:
+            word_list = []
+            tag_list = []
+            for line in f:
+                if line != '\n':
+                    word, tag = line.strip('\n').split()
+                    word_list.append(word)
+                    tag_list.append(tag)
+                else:
+                    word_lists.append(word_list)
+                    tag_lists.append(tag_list)
+                    word_list = []
+                    tag_list = []
+    elif split == 'dev':
+        with open(join(data_dir, 'dev.in')) as f:
+            word_list = []
+            for line in f:
+                if line != '\n':
+                    word = line.strip('\n')
+                    word_list.append(word)
+                else:
+                    word_lists.append(word_list)
+                    word_list = []
+        with open(join(data_dir, 'dev.out')) as f:
+            tag_list = []
+            for line in f:
+                if line != '\n':
+                    tag = line.strip('\n')
+                    tag_list.append(tag)
+                else:
+                    tag_lists.append(tag_list)
+                    tag_list = []
+    elif split == 'test':
+        with open(join(data_dir, 'test.in')) as f:
+            word_list = []
+            tag_list = []
+            for line in f:
+                if line != '\n':
+                    word = line.strip('\n')
+                    word_list.append(word)
+                    tag_list.append(word)
+                else:
+                    word_lists.append(word_list)
+                    tag_lists.append(tag_list)
+                    word_list = []
+                    tag_list = []
     # 如果make_vocab为True，还需要返回word2id和tag2id
     if make_vocab:
         word2id = build_map(word_lists)
