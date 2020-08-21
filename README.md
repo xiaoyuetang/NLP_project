@@ -43,6 +43,11 @@ $  python3 crf_train.py <path_to_train> modelfile_p6i.json
 $  python3 crf_test.py <path_to_dev.in>  modelfile_p6i.json <path_to_dev.p6.CRF.out>
 ```
 
+### Part 6 (ii):
+```
+$  python seq_wc.py --load_arg checkpoint/ner/ner_4_cwlm_lstm_crf.json --load_check_point checkpoint/ner_ner_4_cwlm_lstm_crf.model --gpu 0 --input_file <path_to_train> --output_file <path_to_dev.out>
+```
+
 ### Evaluate: 
 ```
 $ python evaluation.py
